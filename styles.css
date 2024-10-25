@@ -173,6 +173,9 @@ body{
     margin: auto;
     padding: 100px 0;
 }
+main{
+    font-family: "SUSE", sans-serif;
+}
 .container-xl{
     max-width: 1400px;
     margin: 0 auto;
@@ -189,9 +192,7 @@ body{
     align-items: center;
     justify-content: space-around;
 }
-main{
-    font-family: "SUSE", sans-serif;
-}
+
 .btn-main{
     background-color: #4ABE52;
     padding: 10px 40px;
