@@ -175,9 +175,7 @@ body{
     max-width: 1400px;
     margin: 0 auto;
 }
-main{
-    font-family: "SUSE", sans-serif;
-}
+
 
 .main-page{
     z-index: 999;
@@ -188,6 +186,9 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+main{
+    font-family: "SUSE", sans-serif;
 }
 .btn-main{
     background-color: #4ABE52;
