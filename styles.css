@@ -30,7 +30,9 @@ body{
     scroll-snap-type: y mandatory;
     overflow: hidden; /* Evita el desplazamiento inesperado */
 }
-
+.hola{
+    background-color: red;
+}
 .container-clouds{
     position: relative;
     z-index: 1;
