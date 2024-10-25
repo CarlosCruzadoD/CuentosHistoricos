@@ -14,27 +14,42 @@
             <div class="clouds"></div>
             <div class="clouds"></div>
         </div>        
-        <div class="overlay">
-            <header id="header" class="container-xl main-header">
-                <ul>
-                    <li class="lista-inicio">
-                        <a class="link-header" href="">Inicio</a>
-                    </li>
-                    <span>Cuentos Magicos</span>
-                    <li class="lista-resto">
-                        <ul>
-                            <li><a class="link-header" href="">Historias</a></li>
-                            <li><a class="link-header" href="">Contactenos</a></li>
-                            <li><button class="btn-main btn-perfil">Perfil</button></li>
-                        </ul>
-                    </li>
-                </ul>
-                <button class="icon-menu">
-                    <svg  xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" 
-                    style="fill: rgba(0, 0, 0, 1);">
-                        <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path>
-                    </svg>
-                </button>
+        <section id="Inicio" class="overlay">
+            <header id="header" class="main-header">
+                <div class="container-xl">
+                    <ul>
+                        <li class="lista-actual lista-actual-animacion">
+                            <button id="btn_act" class="link-header">Inicio</button>
+                        </li>
+                        <span>Cuentos Magicos</span>
+                        <li class="lista-resto">
+                            <ul>
+                                <li>
+                                    <button id="btn-header-2" class="link-header link-sec" >Historias</button>
+                                </li>
+                                <li>
+                                    <button id="btn-header-3" class="link-header link-sec" >Contactenos</button>
+                                </li>
+                                <li>                                    
+                                    <button class="btn-main btn-perfil">
+                                        <svg class="icon-perfil" 
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+                                            <path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z">
+                                            </path>
+                                        </svg>
+                                        Perfil
+                                    </button>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <button class="icon-menu">
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" 
+                        style="fill: rgba(0, 0, 0, 1);">
+                            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path>
+                        </svg>
+                    </button>
+                </div>                
             </header>  
             <div class="container main-page">
                 <div class="word">
@@ -60,50 +75,56 @@
                 </div>
                 
             </div>
-        </div>        
+        </section>        
     </div>
-    <section class="container">
-        <h2>Historias Destacadas</h2>
-        <div class="options">
-            <button>Categorias</button>
-            <div>
-                <span>Buscar</span>
-                <input type="text" name="" id="">
+    <main>
+        <section id="Historias" class="container historias-destacadas">
+            <h2>Historias Destacadas</h2>
+            <div class="options">
+                <button>Categorias</button>
+                <div>
+                    <span>Buscar</span>
+                    <input type="text" name="" id="">
+                </div>
             </div>
-        </div>
-        <div class="historias-grid">
-            <div class="cuento">
-                <h3 id="titulo1"> Los Tres chanchitos</h3>
-                <p>Una pequeña descripción de la historia...</p>
-                <button class="btn-leer">Leer</button>
+            <div class="historias-grid">
+                <div class="cuento">
+                    <h3 id="titulo1"> Los Tres chanchitos</h3>
+                    <p>Una pequeña descripción de la historia...</p>
+                    <button class="btn-leer">Leer</button>
+                </div>
+                <div class="cuento">
+                    <h3>Título 2</h3>
+                    <p>Una pequeña descripción de la historia...</p>
+                    <button class="btn-leer">Leer</button>
+                </div>
+                <div class="cuento">
+                    <h3>Título 3</h3>
+                    <p>Una pequeña descripción de la historia...</p>
+                    <button class="btn-leer">Leer</button>
+                </div>
+                <div class="cuento">
+                    <h3>Título 4</h3>
+                    <p>Una pequeña descripción de la historia...</p>
+                    <button class="btn-leer">Leer</button>
+                </div>
+                <div class="cuento">
+                    <h3>Título 4</h3>
+                    <p>Una pequeña descripción de la historia...</p>
+                    <button class="btn-leer">Leer</button>
+                </div>
+                <div class="cuento">
+                    <h3>Título 4</h3>
+                    <p>Una pequeña descripción de la historia...</p>
+                    <button class="btn-leer">Leer</button>
+                </div>
             </div>
-            <div class="cuento">
-                <h3>Título 2</h3>
-                <p>Una pequeña descripción de la historia...</p>
-                <button class="btn-leer">Leer</button>
-            </div>
-            <div class="cuento">
-                <h3>Título 3</h3>
-                <p>Una pequeña descripción de la historia...</p>
-                <button class="btn-leer">Leer</button>
-            </div>
-            <div class="cuento">
-                <h3>Título 4</h3>
-                <p>Una pequeña descripción de la historia...</p>
-                <button class="btn-leer">Leer</button>
-            </div>
-            <div class="cuento">
-                <h3>Título 4</h3>
-                <p>Una pequeña descripción de la historia...</p>
-                <button class="btn-leer">Leer</button>
-            </div>
-            <div class="cuento">
-                <h3>Título 4</h3>
-                <p>Una pequeña descripción de la historia...</p>
-                <button class="btn-leer">Leer</button>
-            </div>
-        </div>
-    </section>
+        </section>
+        <section id="Contactenos" class="contatenos container">
+            <div class="contenidoPrueba"></div>
+        </section>
+    </main>
+    
     <footer>
         <span>Todos los derechos | Grupo 2 IHC</span>
     </footer>

@@ -7,6 +7,17 @@
     box-sizing: border-box;
 }
 
+body{
+    overflow: hidden;
+    scroll-behavior: smooth; /* Desplazamiento suave */
+}
+
+.contenidoPrueba{
+    width: 100%;
+    background-color: gray;
+    height: 90vh;
+}
+
 .background{
     width: 100%;
     font-family: "SUSE", sans-serif;
@@ -86,14 +97,17 @@
     to{right: -30%;}
 }
 
+
+
 #header{
     width: 100%;
-    padding: 10px;       
-}
-.main-header{
-    position: relative;
+    padding: 10px; 
+    position: fixed;              
     min-height: 50px;
+    top: 0;
+    left: 0;
 }
+
 #header ul{
     list-style: none;
     display: flex;
@@ -130,6 +144,26 @@
 .link-header{
     text-decoration: none;
     color: #B28261;
+    background:none;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;    
+}
+.lista-actual{
+    position: relative;
+    border-bottom: 4px solid #B28261;
+    
+}
+.lista-actual-animacion{
+    animation: aparecer 1s;
+}
+@keyframes aparecer{
+    from{
+        width: 0;
+    }
+    to{width: 70px;}
 }
 .overlay{
     position: absolute;
@@ -143,6 +177,7 @@
 .container{
     max-width: 1000px;
     margin: auto;
+    padding: 100px 0;
 }
 .container-xl{
     max-width: 1400px;
@@ -175,6 +210,14 @@ main{
 }
 .btn-perfil{
     font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-perfil svg{
+    margin-right:10px;
+    display: none;
 }
 .btn-start{
     font-size: 1.3rem;
@@ -220,19 +263,6 @@ main{
     max-width: 150px;
 }
 
-main h2 {
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 40px;
-    color: #4a90e2;
-    margin-top: 100px;
-}
-
-.historias-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
 .options{
     display: flex;
     justify-content: space-evenly;
@@ -309,6 +339,25 @@ footer {
         display: block;
     }
 }
+/*--------------------------------------------------------------*/
+
+.historias-destacadas{
+    height: 90vh;
+}
+.historias-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    overflow-y: scroll;
+    height: 95%;
+}
+.historias-destacadas h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #4a90e2;
+}
+
 
 /*--------------------------------------------------------------*/
 /*Animacion de Bienvenida*/
