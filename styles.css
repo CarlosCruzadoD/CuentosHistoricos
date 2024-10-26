@@ -321,6 +321,103 @@ footer {
     bottom: 0;
     margin-top: 100px;
 }
+/* Estilos específicos para la página de inicio de sesión */
+.login-container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    height: 600px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+/* Sección izquierda del formulario */
+.login-formulario {
+    flex: 1;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    gap: 15px;
+}
+
+.login-formulario h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.login-formulario label {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.login-formulario input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.btn-login {
+    background-color: #4ABE52;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #388E3C;
+}
+
+.register-link, .forgot-password {
+    margin-top: 10px;
+}
+
+.register-link a {
+    color: #4ABE52;
+    text-decoration: none;
+}
+
+.register-link a:hover, .forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* Sección derecha de la página de bienvenida */
+.login-bienvenida {
+    flex: 1.2;
+    background-color: #E0F7FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px;
+    text-align: center;
+}
+
+.login-bienvenida h2 {
+    font-size: 2rem;
+    color: #4a90e2;
+    margin-bottom: 20px;
+}
+
+.login-bienvenida img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
 
 
 /*Media Querys: Para el diseño responsive */
