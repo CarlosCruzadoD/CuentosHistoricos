@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------
 //Funcion para Login
-let perfil = true;
+let perfil = false;
 if(perfil){
   const iconPerfil = document.querySelector('.icon-perfil');
   iconPerfil.style.display = 'block'
