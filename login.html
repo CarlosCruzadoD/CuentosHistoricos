@@ -21,11 +21,16 @@
                 <label for="password">Contraseña:</label>
                 <input type="password" id="password" name="password" required>
                 
-                <button type="submit" class="btn-login">Iniciar Sesión</button>
-                
-                <p class="register-link">¿No tiene una cuenta? <a href="#">Registrarse</a></p>
-                <p class="forgot-password"><a href="#">¿Olvidó su contraseña?</a></p>
+                <button type="submit" class="btn-login">Iniciar Sesión</button>                
+
             </form>
+            <div>
+                <p class="register-link">¿No tiene una cuenta? 
+                <button class="btn-register" id="btn-perfil-Registrar">
+                    Registrarse
+                </button></p>
+                <p class="forgot-password"><a href="#">¿Olvidó su contraseña?</a></p>
+            </div>
         </div>
         
         <!-- Sección derecha: Imagen de bienvenida -->
@@ -34,5 +39,7 @@
             <img src="./img/niñosvolando.png" alt="Imagen de bienvenida" />
         </div>
     </div>
+    
+    <script src="indexLogin.js"></script>
 </body>
 </html>

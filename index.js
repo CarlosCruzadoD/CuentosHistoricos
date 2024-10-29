@@ -87,3 +87,9 @@ let marcarSeccionActiva = () => {
   })
 }
 window.addEventListener('scroll', marcarSeccionActiva);
+
+//---------------------------------------------------------
+//Abrir otras paginas
+document.getElementById('btn-perfil-Login').addEventListener('click', () => {
+  window.location.href = 'login.html';
+});
