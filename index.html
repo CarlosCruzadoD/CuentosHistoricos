@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="background">
-        <div class="container-clouds">
+    <div class="background-active">
+        <div class="container-clouds-active">
             <div class="clouds"></div>
             <div class="clouds"></div>
             <div class="clouds"></div>
             <div class="clouds"></div>
         </div>        
-        <section id="Inicio" class="overlay">
+        <section id="Inicio" class="overlay-active">
             <header id="header" class="main-header">
                 <div class="container-xl">
                     <ul>
@@ -54,7 +54,7 @@
                     </button>
                 </div>                
             </header>  
-            <div class="container main-page">
+            <div class="main-page">
                 <div class="word">
                     <span>B</span>
                     <span>I</span>
@@ -67,21 +67,129 @@
                     <span>D</span>
                     <span>O</span>
                 </div>
-                <div class="container-img">
+                <div class="container-img-active">
                     <img class="fondo-central" src="./img/niñosvolando.png" alt="">
                 </div>
-                <button class="btn-main btn-start" type="button">Empezar</button>
-                <div class="other-page">
-                    <div class="slide-down">
+                <div class="next-page">
+                    <button class="btn-main btn-start" type="button">Empezar</button>
+                    <div class="other-page">
+                        <div class="slide-down">
+                        </div>
+                        <div class="mouse-img-down">
+                            <img src="./img/mouse.png" alt="">
+                        </div>
+                        <span>Deslice o presione espacio</span>                    
                     </div>
-                    <div class="mouse-img-down">
-                        <img src="./img/mouse.png" alt="">
-                    </div>
-                    <span>Deslice o presione espacio</span>                    
-                </div>
-                
+                </div>              
             </div>
-        </section>        
+        </section>     
+        <section class="perfil display-none">
+            <div class="perfil-container">
+                <div class="selector">
+                     <div class="selector-img">
+                         <img class="fondo-central" src="./img/niñosvolando.png" alt="">
+                     </div>
+                 </div>
+                 <div class="register ">
+                    <div class="other-form-register">
+                        <div class="other-register">                     
+                            <div class="btn-other-login">
+                                <button>
+                                    Google
+                                </button>
+                                <button>
+                                    Apple
+                                </button>
+                                <button>
+                                    Facebook
+                                </button>
+                            </div>                                
+                        </div>
+                        <div class="tradicional-register">
+                            <div class="text">
+                                <div class="line"></div>
+                                <span>Registra una cuenta</span>
+                                <div class="line"></div>
+                            </div>
+                            <button id="btn-signups" class="btn-signup">Correo</button>
+                        </div>
+                    </div>
+                     <div class="register-box">
+                         <h2>Crea una cuenta</h2>
+                         <h3>Ingresa tus datos para iniciar esta aventura</h3>
+                         <form id="registerForm" onsubmit="return validateForm()">
+                            <div class="form-2">
+                                <input type="text" placeholder="Nombre" name="nombre" required>
+                                <input type="text" placeholder="Apellidos" name="apellidos" required>
+                            </div>                             
+                             <input type="email" placeholder="Correo" name="correo" required>
+                             <div class="form-2">
+                                <input type="password" placeholder="Contraseña" name="password" required>
+                                <input type="password" placeholder="Confirmar contraseña" name="confirm_password" required>
+                             </div>
+                             <div class="form-2">
+                                <input type="text" placeholder="País" name="pais" required>
+                                <input type="number" placeholder="Edad" name="edad" min="0" required>
+                             </div>                            
+                             <select name="discapacidad">
+                                 <option value="">Discapacidad</option>
+                                 <option value="visual">Visual</option>
+                                 <option value="auditiva">Auditiva</option>
+                                 <option value="motriz">Motriz</option>
+                                 <option value="ninguna">Ninguna</option>
+                             </select>
+                             <div class="btn-dinamic-register">
+                                <button class="btn-perfil btn-transparent">Cancelar</button>
+                                <button class="btn-perfil" type="submit">Registrarse</button>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+                 <div class="login">
+                     <div class="login-formulario">
+                        <div class="register-container">
+                            <p class="register-link">¿No tiene una cuenta? 
+                                <button class="btn-register" id="btn-perfil-Registrar">
+                                    Registrate ahora
+                                </button>
+                            </p>
+                        </div>
+                        <div class="info-login">
+                            <!--<div class="logo">
+                                <img src="./img/Libros.png" alt="Logo de Libros" />
+                            </div>-->
+                            <h2>Bienvenido de nuevo!</h2>
+                            <h3>Inicio de Sesion</h3>
+                            <form action="login.html" method="post">
+                                <input type="email" id="correo" name="correo" required placeholder="Email">
+                                <input type="password" id="password" name="password" required placeholder="Contraseña">
+                                <div>                             
+                                   <p class="forgot-password"><a href="#">Recuperar Contraseña</a></p>
+                               </div>
+                                <button type="submit" class="btn-perfil">Iniciar Sesión</button>                
+                            </form>                           
+                        </div>                         
+                        <div class="other-login">
+                            <div class="text">
+                                <span>Inicia Sesion con</span>
+                            </div>                            
+                            <div class="btn-other-login">
+                                <button>
+                                    Google
+                                </button>
+                                <button>
+                                    Apple
+                                </button>
+                                <button>
+                                    Facebook
+                                </button>
+                            </div>                                
+                        </div>
+                     </div>
+                 </div>        
+            </div>
+           
+        </section>   
     </div>
     <main>
         <section id="Historias" class="container historias-destacadas">
@@ -129,8 +237,7 @@
         <section id="Contactenos" class="contatenos container">
             <div class="contenidoPrueba"></div>
         </section>
-    </main>
-    
+    </main>    
     <footer>
         <div class="navbar">
             <h1>Cuentos Mágicos</h1>

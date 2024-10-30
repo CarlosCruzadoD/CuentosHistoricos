@@ -1,3 +1,9 @@
+
+const imgPerfil = document.querySelector('.selector')
+const registerBtn = document.getElementById('btn-perfil-Registrar');
+registerBtn.addEventListener('click',()=>{
+  imgPerfil.style.transform = 'translate(100%, 0)'
+})
 //----------------------------------------------------------------------
 //Funcion para Login
 let perfil = false;
@@ -25,8 +31,9 @@ spans.forEach((span, idx) => {
 	}, 750 * (idx+1))
 });
 //----------------------------------------------------------------------
+//Funcion para dezlisar al hacer scroll
 let currentSection = 1;
-const sections = document.querySelectorAll('section');
+const sections = document.querySelectorAll('secstion');
 
 function scrollToSection(index) {
   if (index >= 0 && index < sections.length) {
@@ -50,19 +57,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 //----------------------------------------------------------------------
-const header = document.getElementById('header');
-const stickyOffset = header.offsetTop; // Obtiene la posición del header
-
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 120) {
-    header.classList.add('fixded'); // Agrega la clase cuando se desplaza
-  } else {
-    header.classList.remove('fdixed'); // Remueve la clase si vuelve arriba
-  }
-});
-
-
-//---------------------------------------------------------------------------
+//Animacion para cambiar el orden del Header
 const sectionsHeader = document.querySelectorAll('section');
 const btnHeader = document.getElementById('btn_act');
 const btnSecHeader = document.querySelectorAll('.link-sec');
@@ -91,5 +86,39 @@ window.addEventListener('scroll', marcarSeccionActiva);
 //---------------------------------------------------------
 //Abrir otras paginas
 document.getElementById('btn-perfil-Login').addEventListener('click', () => {
-  window.location.href = 'login.html';
+ /* window.location.href = 'login.html';*/
 });
+//---------------------------------------------------------
+//Boton Perfil
+let mainPage = document.querySelector('.main-page');
+let titulo = document.querySelector('.word');
+const header = document.getElementById('header');
+const downOptions = document.querySelector('.next-page');
+const perfilView = document.querySelector('.perfil');
+localStorage.setItem('seccionVisible', 'false');
+if (localStorage.getItem('seccionVisible') === 'true') {
+  perfilView.classList.remove('display-none');
+}
+document.getElementById('btn-perfil-Login').addEventListener('click', () => {
+  console.log(perfil);
+  titulo.style.display = 'none';
+  header.style.display = 'none';
+  downOptions.style.display = 'none';
+  mainPage.style.display = 'none';
+  perfilView.classList.remove('display-none');
+  
+});
+let btnSignUp=document.getElementById('btn-signups');
+
+btnSignUp.addEventListener('click', () =>{
+  document.querySelector('.other-form-register').style.visibility = 'hidden';
+  document.querySelector('.register-box').style.visibility = 'visible';
+
+})
+// Opcional: Ocultar la sección al hacer clic en ella
+seccion.addEventListener('click', () => {
+  seccion.classList.remove('visible');
+  localStorage.setItem('seccionVisible', 'false'); // Actualizar el estado
+});
+
+

@@ -68,22 +68,3 @@ body {
     width: 50px;
 }
 
-.register-box input, .register-box select, .register-box button {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.register-box button {
-    background-color: #4CAF50;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-}
-
-.register-box button:hover {
-    background-color: #45a049;
-}
