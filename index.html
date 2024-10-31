@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="background-active">
-        <div class="container-clouds-active">
+    <div class="background">
+        <div class="container-clouds">
             <div class="clouds"></div>
             <div class="clouds"></div>
             <div class="clouds"></div>
             <div class="clouds"></div>
         </div>        
-        <section id="Inicio" class="overlay-active">
+        <section id="Inicio" class="overlay">
             <header id="header" class="main-header">
                 <div class="container-xl">
                     <ul>
@@ -85,25 +85,29 @@
         </section>     
         <section class="perfil display-none">
             <div class="perfil-container">
+                <button id="close-perfil">
+                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                    <span>Cerrar</span>
+                </button>
                 <div class="selector">
                      <div class="selector-img">
                          <img class="fondo-central" src="./img/niñosvolando.png" alt="">
                      </div>
                  </div>
-                 <div class="register ">
+                 <div class="register">
                     <div class="other-form-register">
                         <div class="other-register">                     
                             <div class="btn-other-login">
-                                <button>
-                                    Google
+                                <button class="btnIcon">
+                                    <img class="img-icon" src="img/icons/google.png" alt="">
                                 </button>
-                                <button>
-                                    Apple
+                                <button class="btnIcon">
+                                    <img class="img-icon" src="img/icons/macos.png" alt="">
                                 </button>
-                                <button>
-                                    Facebook
+                                <button class="btnIcon">
+                                    <img class="img-icon" src="img/icons/facebook.png" alt="">
                                 </button>
-                            </div>                                
+                            </div>                                         
                         </div>
                         <div class="tradicional-register">
                             <div class="text">
@@ -113,37 +117,45 @@
                             </div>
                             <button id="btn-signups" class="btn-signup">Correo</button>
                         </div>
+                        <div class="back-login">
+                            <p>
+                                Ya tiene una cuenta
+                                <button id="btnBInicioS">Inicia Sesion</button>
+                            </p>
+                         </div>
                     </div>
                      <div class="register-box">
-                         <h2>Crea una cuenta</h2>
-                         <h3>Ingresa tus datos para iniciar esta aventura</h3>
-                         <form id="registerForm" onsubmit="return validateForm()">
-                            <div class="form-2">
-                                <input type="text" placeholder="Nombre" name="nombre" required>
-                                <input type="text" placeholder="Apellidos" name="apellidos" required>
-                            </div>                             
-                             <input type="email" placeholder="Correo" name="correo" required>
-                             <div class="form-2">
-                                <input type="password" placeholder="Contraseña" name="password" required>
-                                <input type="password" placeholder="Confirmar contraseña" name="confirm_password" required>
+                        <div class="form-info">
+                            <h2>Crea una cuenta</h2>
+                            <h3>Ingresa tus datos para iniciar esta aventura</h3>
+                            <form id="registerForm" onsubmit="return validateForm()">
+                               <div class="form-2">
+                                   <input type="text" placeholder="Nombre" name="nombre" required>
+                                   <input type="text" placeholder="Apellidos" name="apellidos" required>
+                               </div>                             
+                                <input type="email" placeholder="Correo" name="correo" required>
+                                <div class="form-2">
+                                   <input type="password" placeholder="Contraseña" name="password" required>
+                                   <input type="password" placeholder="Confirmar contraseña" name="confirm_password" required>
+                                </div>
+                                <div class="form-2">
+                                   <input type="text" placeholder="País" name="pais" required>
+                                   <input type="number" placeholder="Edad" name="edad" min="0" required>
+                                </div>                            
+                                <select name="discapacidad">
+                                    <option value="">Discapacidad</option>
+                                    <option value="visual">Visual</option>
+                                    <option value="auditiva">Auditiva</option>
+                                    <option value="motriz">Motriz</option>
+                                    <option value="ninguna">Ninguna</option>
+                                </select>                             
+                            </form>
+                            <div class="btn-dinamic-register">
+                                <button class="btn-perfil btn-cancelar-register btn-transparent">Cancelar</button>
+                                <button class="btn-perfil btn-registrar" type="submit">Registrarse</button>
                              </div>
-                             <div class="form-2">
-                                <input type="text" placeholder="País" name="pais" required>
-                                <input type="number" placeholder="Edad" name="edad" min="0" required>
-                             </div>                            
-                             <select name="discapacidad">
-                                 <option value="">Discapacidad</option>
-                                 <option value="visual">Visual</option>
-                                 <option value="auditiva">Auditiva</option>
-                                 <option value="motriz">Motriz</option>
-                                 <option value="ninguna">Ninguna</option>
-                             </select>
-                             <div class="btn-dinamic-register">
-                                <button class="btn-perfil btn-transparent">Cancelar</button>
-                                <button class="btn-perfil" type="submit">Registrarse</button>
-                             </div>
-                         </form>
-                     </div>
+                        </div>                       
+                     </div>                     
                  </div>
                  <div class="login">
                      <div class="login-formulario">
@@ -155,9 +167,6 @@
                             </p>
                         </div>
                         <div class="info-login">
-                            <!--<div class="logo">
-                                <img src="./img/Libros.png" alt="Logo de Libros" />
-                            </div>-->
                             <h2>Bienvenido de nuevo!</h2>
                             <h3>Inicio de Sesion</h3>
                             <form action="login.html" method="post">
@@ -166,22 +175,24 @@
                                 <div>                             
                                    <p class="forgot-password"><a href="#">Recuperar Contraseña</a></p>
                                </div>
-                                <button type="submit" class="btn-perfil">Iniciar Sesión</button>                
+                                <button type="submit" class="btn-perfil btn-IniciarSesion">Iniciar Sesión</button>                
                             </form>                           
                         </div>                         
                         <div class="other-login">
                             <div class="text">
+                                <div class="line"></div>
                                 <span>Inicia Sesion con</span>
+                                <div class="line"></div>
                             </div>                            
                             <div class="btn-other-login">
-                                <button>
-                                    Google
+                                <button class="btnIcon">
+                                    <img class="img-icon" src="img/icons/google.png" alt="">
                                 </button>
-                                <button>
-                                    Apple
+                                <button class="btnIcon">
+                                    <img class="img-icon" src="img/icons/macos.png" alt="">
                                 </button>
-                                <button>
-                                    Facebook
+                                <button class="btnIcon">
+                                    <img class="img-icon" src="img/icons/facebook.png" alt="">
                                 </button>
                             </div>                                
                         </div>

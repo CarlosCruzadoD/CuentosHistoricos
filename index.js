@@ -1,9 +1,5 @@
 
-const imgPerfil = document.querySelector('.selector')
-const registerBtn = document.getElementById('btn-perfil-Registrar');
-registerBtn.addEventListener('click',()=>{
-  imgPerfil.style.transform = 'translate(100%, 0)'
-})
+
 //----------------------------------------------------------------------
 //Funcion para Login
 let perfil = false;
@@ -95,19 +91,39 @@ let titulo = document.querySelector('.word');
 const header = document.getElementById('header');
 const downOptions = document.querySelector('.next-page');
 const perfilView = document.querySelector('.perfil');
+const overlay = document.querySelector('.overlay');
+const closePerfil = document.getElementById("close-perfil");
+
 localStorage.setItem('seccionVisible', 'false');
 if (localStorage.getItem('seccionVisible') === 'true') {
   perfilView.classList.remove('display-none');
 }
 document.getElementById('btn-perfil-Login').addEventListener('click', () => {
   console.log(perfil);
-  titulo.style.display = 'none';
-  header.style.display = 'none';
-  downOptions.style.display = 'none';
-  mainPage.style.display = 'none';
+  header.classList.add('display-none');
+  mainPage.classList.add('display-none');
   perfilView.classList.remove('display-none');
-  
+  overlay.classList.add('overlay-active');
 });
+//cambio de posicion de la imagen en el perfil
+const imgPerfil = document.querySelector('.selector')
+const registerBtn = document.getElementById('btn-perfil-Registrar');
+registerBtn.addEventListener('click',()=>{
+  imgPerfil.style.transform = 'translate(100%, 0)'
+})
+
+document.getElementById('btnBInicioS').addEventListener('click', () => {
+  imgPerfil.style.transform = 'translate(0, 0)'
+})
+closePerfil.addEventListener('click',()=>{
+  header.classList.remove('display-none');
+  mainPage.classList.remove('display-none');
+  perfilView.classList.add('display-none');
+  overlay.classList.remove('overlay-active')
+})
+
+
+
 let btnSignUp=document.getElementById('btn-signups');
 
 btnSignUp.addEventListener('click', () =>{
@@ -115,6 +131,13 @@ btnSignUp.addEventListener('click', () =>{
   document.querySelector('.register-box').style.visibility = 'visible';
 
 })
+
+document.querySelector('.btn-cancelar-register').addEventListener('click', () => {
+  console.log("dd")
+  document.querySelector('.other-form-register').style.visibility = 'visible';
+  document.querySelector('.register-box').style.visibility = 'hidden';
+})
+
 // Opcional: Ocultar la sección al hacer clic en ella
 seccion.addEventListener('click', () => {
   seccion.classList.remove('visible');
