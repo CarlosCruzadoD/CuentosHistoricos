@@ -1,0 +1,344 @@
+.background{
+    width: 100%;
+    font-family: "SUSE", sans-serif;
+    background-image: url(../img/fondo.png);
+    height:100vh;
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    scroll-snap-type: y mandatory;
+    overflow: hidden; /* Evita el desplazamiento inesperado */
+}
+.container-clouds{
+    position: relative;
+    z-index: 1;
+}
+.clouds{
+    position: absolute;
+    background-image: url(../img/cloud.png);
+    background-size: 100% 100%;
+}
+.clouds:nth-child(1){
+    width: 300px;
+    height: 150px;
+    top: 200px;
+    animation: movimientoI 60s linear infinite ;
+}
+.clouds:nth-child(2){
+    width: 240px;
+    height: 120px;
+    top: 300px;
+    animation: movimientoD 60s linear infinite ;
+}
+.clouds:nth-child(3){
+    width: 240px;
+    height: 120px;
+    top: 400px;
+    animation: movimientoIT 60s linear infinite ;
+}
+.clouds:nth-child(4){
+    width: 120px;
+    height: 60px;
+    top: 250px;
+    animation: movimientoDT 60s linear infinite ;
+}
+
+@keyframes movimientoI{
+    from{
+        left: 100%;
+    }
+    to{left: -30%;}
+}
+@keyframes movimientoIT{
+    from{
+        left: 120%;
+    }
+    to{left: -50%;}
+}
+@keyframes movimientoD{
+    from{
+        right: 100%;
+    }
+    to{right: -30%;}
+}
+@keyframes movimientoDT{
+    from{
+        right: 110%;
+    }
+    to{right: -30%;}
+}
+
+/*--------------------------------------------------------------------*/
+/*****Header*****/
+.container-xl{
+    max-width: 1400px;
+    margin: auto;
+}
+.overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    padding: 20px;
+}
+
+#header{
+    width: 100%;
+    padding: 10px; 
+    position: fixed;              
+    min-height: 50px;
+    top: 0;
+    left: 0;
+}
+#header ul{
+    list-style: none;
+    display: flex;
+    height:20px;
+    padding: 3% 60px;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 1.3rem;
+    display: none;
+}
+.lista-actual{
+    position: relative;
+    border-bottom: 4px solid #B28261;
+    
+}
+#btn_act{
+    width: 100%;
+}
+.lista-actual-animacion{
+    animation: aparecer 1.5s;
+}
+@keyframes aparecer{
+    from{
+        width: 0;
+    }
+    to{width: 70px;}
+}
+.link-header{
+    text-decoration: none;
+    color: #B28261;
+    background:none;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;    
+}
+.lista-resto li{
+    margin: 0 20px;
+}
+
+.icon-menu{
+    background-color: red;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate(0, -10%);
+    cursor: pointer;
+    border: none;
+}
+/*--------------------------------------------------------------------*/
+/****Contenido Pagina Inicio****/
+.container{
+    max-width: 1000px;
+    margin: auto;
+    padding: 100px 0;
+}
+/*--------------------------------------------------------------*/
+/*Animacion de Bienvenida*/
+.word{
+	font-family: 'Anton', sans-serif;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.word span{
+	cursor: pointer;
+	display: inline-block;
+	font-size: clamp(3.5rem, 5vw, 5rem);
+	user-select: none;
+	line-height: .8;
+}
+
+.word span:nth-child(2).active {
+	animation: balance 1.5s ease-out;
+	transform-origin: bottom left;
+}
+
+@keyframes balance {
+	0%, 100% {
+		transform: rotate(0deg);
+	}
+	
+	30%, 60% {
+		transform: rotate(-45deg);
+	}
+}
+
+.word span:nth-child(4).active {
+	animation: shrinkjump 1s ease-in-out;
+	transform-origin: bottom center;
+}
+
+@keyframes shrinkjump {
+	10%, 35% {
+		transform: scale(2, .2) translate(0, 0);
+	}
+	
+	45%, 50% {
+		transform: scale(1) translate(0, -150px);
+	}
+	
+	80% {
+		transform: scale(1) translate(0, 0);
+	}
+}
+
+.word span:nth-child(6).active {
+	animation: falling 2s ease-out;
+	transform-origin: bottom center;
+}
+
+@keyframes falling {
+	12% {
+		transform: rotateX(240deg);
+	}
+	
+	24% {
+		transform: rotateX(150deg);
+	}
+	
+	36% {
+		transform: rotateX(200deg);
+	}
+	
+	48% {
+		transform: rotateX(175deg);
+	}
+	
+	60%, 85% {
+		transform: rotateX(180deg);
+	}
+	
+	100% {
+		transform: rotateX(0deg);
+	}
+}
+
+.word span:nth-child(8).active {
+	animation: rotate 1s ease-out;
+}
+
+@keyframes rotate {
+	20%, 80% {
+		transform: rotateY(180deg);
+	}
+	
+	100% {
+		transform: rotateY(360deg);
+	}
+}
+
+.word span:nth-child(10).active {
+	animation: toplong 1.5s linear;
+}
+
+@keyframes toplong {
+	10%, 40% {
+		transform: translateY(-48vh) scaleY(1);
+	}
+	
+	90% {
+		transform: translateY(-48vh) scaleY(4);
+	}
+}
+/********************************/
+.main-page{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 0 20px 0;
+}
+.container-img{
+    height: 50%;
+    padding: 30px;
+    max-width: 500px;
+}
+.fondo-central{
+    height: 100%;
+}
+
+.btn-main{
+    background-color: #4ABE52;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    font-family: "SUSE", sans-serif;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s;
+}
+.btn-start{
+    font-size: 1.3rem;
+}
+
+.btn-main:hover{
+    transform: scale(1.05);
+}
+.slide-down{
+    width: 5px;
+    height: 70px;
+    background-color: rgb(191, 191, 191);
+    border-radius: 10px;
+    position: relative;
+}
+.slide-down::after{
+    content: "";
+    width: 5px;
+    height: 20px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    animation: slide 2s infinite;
+}
+@keyframes slide{
+    from{
+        top:0;
+    }
+    to{
+        top: 73%;
+    }
+}
+.other-page{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    max-width: 300px;
+    margin-top: 30px;
+}
+.other-page span{
+    max-width: 150px;
+}
+.mouse-img-down{
+    max-width: 24px;
+    animation: slide 2s infinite;
+    position: absolute;
+    top: 0;
+    left: -20%;
+}
+.mouse-img-down img{
+    width: 100%;
+}

@@ -1,0 +1,36 @@
+@import url(estilos/styles.css);
+@import url(estilos/InicioEstilos.css);
+@import url(estilos/Contactenos.css);
+
+
+
+
+
+.grid-template-3{
+    grid-template-columns: repeat(3, 1fr);
+}
+
+
+
+
+
+
+
+
+
+
+/*Media Querys: Para el diseño responsive */
+
+/*--------------------------------------------------------------*/
+
+@media screen and (min-width:1024px) {
+    #header ul{
+        display: flex;
+    }
+    .icon-menu{
+        display: none;
+    }
+    .fixed{
+        display: block;
+    }
+}

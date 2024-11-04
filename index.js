@@ -29,7 +29,7 @@ spans.forEach((span, idx) => {
 //----------------------------------------------------------------------
 //Funcion para dezlisar al hacer scroll
 let currentSection = 1;
-const sections = document.querySelectorAll('secstion');
+const sections = document.querySelectorAll('section');
 
 function scrollToSection(index) {
   if (index >= 0 && index < sections.length) {
@@ -37,9 +37,8 @@ function scrollToSection(index) {
     currentSection = index;
   }
 }
-
 document.addEventListener('wheel', (event) => {
-  if (event.deltaY > 0) {
+  if (event.deltaY > 50) {
     scrollToSection(currentSection + 1);
   } else {
     scrollToSection(currentSection - 1);
@@ -47,7 +46,7 @@ document.addEventListener('wheel', (event) => {
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
+  if (event.key === 'Space') {
     scrollToSection(currentSection + 1);
   }
 });
@@ -138,10 +137,81 @@ document.querySelector('.btn-cancelar-register').addEventListener('click', () =>
   document.querySelector('.register-box').style.visibility = 'hidden';
 })
 
+function validateForm() {
+  const form = document.getElementById('registerForm');
+  const password = form.password.value;
+  const confirmPassword = form.confirm_password.value;
+
+  if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden.");
+      return false;
+  }
+  return true;
+}
+
+const tarjetaHistoria = document.querySelectorAll('.card');
+tarjetaHistoria.forEach(card =>{
+  card.addEventListener('click', ()=>{
+    document.querySelector('.card-container').classList.remove('display-none');
+    document.querySelector('.grid-container').classList.add('grid-template-3');
+  })
+})
+
+const swicthNombre = (nombre)=>{
+  switch (nombre) {
+    case 'José Luis Cerff Aguilar':
+      if(document.querySelector('.top-left').classList.value.includes('expand')){
+        document.querySelector('.top-left').classList.remove('expand');
+      }else{
+        document.querySelector('.top-left').classList.add('expand');
+      }        
+      break;  
+      case 'David Elías Chávez Tintaya':
+      if(document.querySelector('.top-right').classList.value.includes('expand')){
+        document.querySelector('.top-right').classList.remove('expand');
+      }else{
+        document.querySelector('.top-right').classList.add('expand');
+      }        
+      break;  
+      case 'Mauro Alberto Contreras San Miguel':
+      if(document.querySelector('.bottom-left').classList.value.includes('expand')){
+        document.querySelector('.bottom-left').classList.remove('expand');
+      }else{
+        document.querySelector('.bottom-left').classList.add('expand');
+      }        
+      break;  
+      case 'Luz María Crisóstomo Delgado':
+      if(document.querySelector('.bottom-right').classList.value.includes('expand')){
+        document.querySelector('.bottom-right').classList.remove('expand');
+      }else{
+        document.querySelector('.bottom-right').classList.add('expand');
+      }        
+      break;  
+      case 'Carlos Tadeo Cruzado Díaz':
+      if(document.querySelector('.center-square').classList.value.includes('expand')){
+        document.querySelector('.center-square').classList.remove('expand');
+      }else{
+        document.querySelector('.center-square').classList.add('expand');
+      }        
+      break;  
+    default:
+      break;
+  }
+}
+const btnContactenos = document.querySelectorAll('.btnAlumnos');
+btnContactenos.forEach(btn =>{
+  btn.addEventListener('click', nom=>{
+    swicthNombre(nom.target.innerText);
+  })
+})
+
+
+
 // Opcional: Ocultar la sección al hacer clic en ella
 seccion.addEventListener('click', () => {
   seccion.classList.remove('visible');
   localStorage.setItem('seccionVisible', 'false'); // Actualizar el estado
 });
+
 
 
