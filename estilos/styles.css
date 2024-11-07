@@ -2,30 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Anton|Roboto');
 
-*{
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body{
-    overflow: hidden;
-    scroll-behavior: smooth; /* Desplazamiento suave */
-    font-family: "SUSE", sans-serif;
-}
-
-
 .container-l{
     max-width: 1300px;
     margin:  0 auto;
     padding: 100px 0;
-}
-/*--------------------------------------------------------------------*/
-/****NUBES*****/
-
-/********************************/
-
-.cuento:hover {
-    transform: scale(1.05);
 }
 
 footer {
@@ -37,14 +17,6 @@ footer {
     margin-top: 100px;
 }
 
-
-.historias-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    overflow-y: scroll;
-    height: 95%;
-}
 .historias-destacadas h2 {
     text-align: center;
     font-size: 32px;
@@ -53,64 +25,7 @@ footer {
 
 /*--------------------------------------------------------------------*/
 /****Historias*/
-.options{
-    display: flex;
-    justify-content: space-evenly;
-    background-color: rgb(247, 247, 247);
-    margin-bottom: 20px;
-    padding: 20px;
-}
-.historias-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    overflow-y: scroll;
-    height: 95%;
-}
-.cuento {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-    max-width: 600px;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content: space-around;
-}
 
-.cuento h3 {
-    font-size: 24px;
-    color: #4a90e2;
-}
-
-.cuento p {
-    font-size: 16px;
-    color: #666;
-}
-
-.cuento button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4a90e2;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    display: flex;
-
-}
-.cuento button:hover {
-    background-color: #ffd700;
-}
-.cuento:hover {
-    transform: scale(1.05);
-}
 /*--------------------------------------------------------------------*/
 footer {
     background-color: #333;
@@ -123,17 +38,7 @@ footer {
 
 /*--------------------------------------------------------------------*/
 /*Media Querys: Para el diseño responsive */
-@media screen and (min-width:1024px) {
-    #header ul{
-        display: flex;
-    }
-    .icon-menu{
-        display: none;
-    }
-    .fixed{
-        display: block;
-    }
-}
+
 /*--------------------------------------------------------------*/
 .btn-register{
     background: none;
@@ -519,14 +424,47 @@ box-shadow:  8px 8px 14px #b5b5b5,
     margin: 20px 0;
 }
 /**------------------------------------------------------*/
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    overflow-y: scroll;
-    padding: 10px;
+/*SECTION: HISTORIAS*/
+/**------------------------------------------------------*/
+#Historias{
+    height: 100vh;
+}
+.options{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: rgb(247, 247, 247);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+.historias{
+    display: flex;
     height: 100%;
+    max-height: 700px;
+    align-items: center;
+    justify-content: center ;
+    
+}
+.card-container{
+    width: 100%;
+    height: 100%;        
+    padding: 10px;    
+}
+.info-card{
+    background-color: gray;
+    width: 100%;
+    height: 100%;    
+    border-radius: 40px;
+    
+}
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    /*grid-template-columns: repeat(4, 1fr);*/
+    gap: 20px;
+    height: 100%;
+    padding: 20px;
+    justify-content: center;
+    overflow-y: scroll;
 }
 
 .card {
@@ -538,9 +476,11 @@ box-shadow:  8px 8px 14px #b5b5b5,
     justify-content: center;
     border: 1px solid #ddd;
     padding: 1rem;
-    transition: transform 0.1s ease; 
-    width: 240px;
-    height: 330px;
+    transition: transform 0.1s ease;
+    min-width: 240px;
+    max-width: 240px;
+    min-height: 250px;
+    max-height: 330px;
     cursor: pointer;
 }
 .card:hover {
@@ -582,16 +522,3 @@ box-shadow:  8px 8px 14px #b5b5b5,
     border-color: #4CAF50;
 }
 
-.historias{
-    display: flex;
-    height: 700px;
-    align-items: center;
-    justify-content: center ;
-    gap: 20px;
-}
-.card-container{
-    width: 450px;
-    height: 100%;    
-    background-color: gray;
-    border-radius: 40px;
-}

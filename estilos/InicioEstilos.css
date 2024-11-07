@@ -73,6 +73,7 @@
 .container-xl{
     max-width: 1400px;
     margin: auto;
+    position: relative;
 }
 .overlay{
     position: absolute;
@@ -99,7 +100,6 @@
     justify-content: space-between;
     font-weight: bold;
     font-size: 1.3rem;
-    display: none;
 }
 .lista-actual{
     position: relative;
@@ -132,15 +132,85 @@
     margin: 0 20px;
 }
 
-.icon-menu{
-    background-color: red;
-    display: block;
+.icon-menu{    
     position: absolute;
-    top: 50%;
-    right: 5%;
-    transform: translate(0, -10%);
+    top: 0;
+    left: 0;
+    margin: 20px;
     cursor: pointer;
     border: none;
+    z-index: 10006;
+}
+.btnMenu{
+    display: flex;
+    flex-direction: column;
+    width: 2.5rem;
+    height: 2.5rem;
+    gap: .5rem;
+    z-index: 1006;
+    background-color: transparent;
+    border: 0;
+}
+.btnMenu > div {
+    background-color: black;
+    height: 2px;
+    width: 100%;
+    border-radius: 5px;
+    transition: all .5s;
+    transform-origin: left;
+}
+.btnMenuClose div:first-child{
+    transform: rotate(45deg);
+}
+.btnMenuClose div:nth-child(2){
+    opacity: 0;
+}
+.btnMenuClose div:last-child{
+    transform: rotate(-45deg);
+}
+.menu-options{
+    display: none;
+    z-index: 1005;
+    background-color: rgb(113, 195, 242);
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: -100%;
+    left: 0;
+    transition: all 2s;
+    opacity: 0;
+}
+.menu-options-100{
+    top: 0;
+    opacity: 1;
+}
+.menu-options ul{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    list-style: none;
+    align-content: center;
+    justify-content: center;
+    padding: 0;
+}
+.menu-options li{
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.menu-options button{
+    background-color: transparent;
+    font-size: 1.4rem;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transform-origin: left;
+    transition: all;
+}
+.menu-options button:hover{
+    transform: scale(1.1);
+    border-bottom: 1px solid #fff;
 }
 /*--------------------------------------------------------------------*/
 /****Contenido Pagina Inicio****/
@@ -160,7 +230,7 @@
 .word span{
 	cursor: pointer;
 	display: inline-block;
-	font-size: clamp(3.5rem, 5vw, 5rem);
+	font-size: clamp(2.5rem, 7vw, 5rem);
 	user-select: none;
 	line-height: .8;
 }

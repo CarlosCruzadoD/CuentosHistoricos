@@ -45,7 +45,7 @@ document.addEventListener('wheel', (event) => {
   }
 });
 
-document.addEventListener('keydown', (event) => {
+document.addEventListener('keypress', (event) => {
   if (event.key === 'Space') {
     scrollToSection(currentSection + 1);
   }
@@ -148,7 +148,7 @@ function validateForm() {
   }
   return true;
 }
-
+//-----------------------------------------------------------------
 const tarjetaHistoria = document.querySelectorAll('.card');
 tarjetaHistoria.forEach(card =>{
   card.addEventListener('click', ()=>{
@@ -156,7 +156,7 @@ tarjetaHistoria.forEach(card =>{
     document.querySelector('.grid-container').classList.add('grid-template-3');
   })
 })
-
+/*----------------------------------------------------------------------------------------- */
 const swicthNombre = (nombre)=>{
   switch (nombre) {
     case 'José Luis Cerff Aguilar':
@@ -204,7 +204,18 @@ btnContactenos.forEach(btn =>{
     swicthNombre(nom.target.innerText);
   })
 })
+//--------------------------------------------------
+const btnMenu = document.querySelector('.btnMenu');
 
+btnMenu.addEventListener('click', ()=>{
+  if(btnMenu.className.includes('btnMenuClose')){
+    document.querySelector('.menu-options').classList.remove('menu-options-100');
+    btnMenu.classList.remove('btnMenuClose');
+  }else{
+    document.querySelector('.menu-options').classList.add('menu-options-100');
+  btnMenu.classList.add('btnMenuClose');
+  }  
+})
 
 
 // Opcional: Ocultar la sección al hacer clic en ella

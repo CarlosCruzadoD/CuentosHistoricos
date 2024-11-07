@@ -3,6 +3,17 @@
 @import url(estilos/Contactenos.css);
 
 
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+   /* overflow: hidden;*/
+    scroll-behavior: smooth; /* Desplazamiento suave */
+    font-family: "SUSE", sans-serif;
+}
+
 
 
 
@@ -23,14 +34,36 @@
 
 /*--------------------------------------------------------------*/
 
-@media screen and (min-width:1024px) {
+@media screen and (max-width:1024px) {
     #header ul{
-        display: flex;
-    }
-    .icon-menu{
         display: none;
     }
-    .fixed{
+    .icon-menu{
         display: block;
+    }
+    .menu-options{
+        display: block;        
+    }
+    .card-container{
+        position: fixed;
+    }
+    .contactenos-container{
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        height: fit-content;
+    }
+    .fotos, .contacto {
+        margin: 0;
+    }
+    .icon{
+        min-height: 300px;
+    }
+    .fotos{
+        margin-top: 20px;
+    }
+    .fotos h2{
+        display: none;
     }
 }
