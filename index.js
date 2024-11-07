@@ -1,5 +1,36 @@
+//Funcion para dezlisar al hacer scroll o presionar las teclas
+let currentSection = 1;
+const sections = document.querySelectorAll('section');
+const scrollThreshold = 10; 
+let isScrolling = false; 
 
+function scrollToSection(index) {
+  if (index >= 0 && index < sections.length) {
+    sections[index].scrollIntoView({ behavior: 'smooth' });
+    currentSection = index;
+  }
+}
+document.addEventListener('wheel', (event) => {
+  if (isScrolling) return;
+  isScrolling = true;
+  setTimeout(() => { isScrolling = false; }, 600);
+  if (event.deltaY > scrollThreshold) {
+    scrollToSection(currentSection + 1);
+  } else if(currentSection != 0){
+    scrollToSection(currentSection - 1);
+  }
+});
 
+document.addEventListener('keydown', (event) => {
+  if (isScrolling) return; 
+  if (event.key === 'Enter' || event.key === 'ArrowDown') {
+    scrollToSection(currentSection + 1);
+    console.log(currentSection);
+  } else if (event.key === 'ArrowUp') {
+    scrollToSection(currentSection - 1);
+    console.log(currentSection);
+  }
+});
 //----------------------------------------------------------------------
 //Funcion para Login
 let perfil = false;
@@ -7,8 +38,6 @@ if(perfil){
   const iconPerfil = document.querySelector('.icon-perfil');
   iconPerfil.style.display = 'block'
 }
-
-
 //----------------------------------------------------------------------
 //Funcion de las Letras de Bienvenida
 const spans = document.querySelectorAll('.word span');
@@ -26,31 +55,6 @@ spans.forEach((span, idx) => {
 		span.classList.add('active');
 	}, 750 * (idx+1))
 });
-//----------------------------------------------------------------------
-//Funcion para dezlisar al hacer scroll
-let currentSection = 1;
-const sections = document.querySelectorAll('section');
-
-function scrollToSection(index) {
-  if (index >= 0 && index < sections.length) {
-    sections[index].scrollIntoView({ behavior: 'smooth' });
-    currentSection = index;
-  }
-}
-document.addEventListener('wheel', (event) => {
-  if (event.deltaY > 50) {
-    scrollToSection(currentSection + 1);
-  } else {
-    scrollToSection(currentSection - 1);
-  }
-});
-
-document.addEventListener('keypress', (event) => {
-  if (event.key === 'Space') {
-    scrollToSection(currentSection + 1);
-  }
-});
-
 //----------------------------------------------------------------------
 //Animacion para cambiar el orden del Header
 const sectionsHeader = document.querySelectorAll('section');
@@ -79,10 +83,18 @@ let marcarSeccionActiva = () => {
 window.addEventListener('scroll', marcarSeccionActiva);
 
 //---------------------------------------------------------
-//Abrir otras paginas
-document.getElementById('btn-perfil-Login').addEventListener('click', () => {
- /* window.location.href = 'login.html';*/
-});
+//Funcion de Botones del Header
+btnSecHeader.forEach((boton)=>{
+  boton.addEventListener('click', ()=>{
+    console.log(boton.innerHTML);
+    for(let i = 0; i < sections.length ; i++){
+      if(sections[i].id == boton.innerHTML){
+        sections[i].scrollIntoView({ behavior: 'smooth' });
+      }  
+    }
+  })
+})
+
 //---------------------------------------------------------
 //Boton Perfil
 let mainPage = document.querySelector('.main-page');
@@ -149,13 +161,7 @@ function validateForm() {
   return true;
 }
 //-----------------------------------------------------------------
-const tarjetaHistoria = document.querySelectorAll('.card');
-tarjetaHistoria.forEach(card =>{
-  card.addEventListener('click', ()=>{
-    document.querySelector('.card-container').classList.remove('display-none');
-    document.querySelector('.grid-container').classList.add('grid-template-3');
-  })
-})
+
 /*----------------------------------------------------------------------------------------- */
 const swicthNombre = (nombre)=>{
   switch (nombre) {
@@ -213,61 +219,35 @@ btnMenu.addEventListener('click', ()=>{
     btnMenu.classList.remove('btnMenuClose');
   }else{
     document.querySelector('.menu-options').classList.add('menu-options-100');
-  btnMenu.classList.add('btnMenuClose');
+    btnMenu.classList.add('btnMenuClose');
   }  
 })
-
-
-
-
-//Función de los botones, para elegir cuentos
-// Selecciona todas las tarjetas de cuentos
-document.addEventListener('DOMContentLoaded', () => {
-  const tarjetaHistoria = document.querySelectorAll('.card');
-  tarjetaHistoria.forEach(card => {
-      card.addEventListener('click', () => {
-          document.querySelector('.card-container').classList.remove('display-none');
-          document.querySelector('.grid-container').classList.add('grid-template-3'); // Asegúrate de que esta clase sea correcta
-      });
-  });
-});
-
-// Función para actualizar el enfoque en la tarjeta seleccionada
-function updateFocus() {
-    // Remueve la clase de enfoque de todas las tarjetas
-    storyCards.forEach(card => card.classList.remove('focused'));
-    
-    // Añade la clase de enfoque a la tarjeta actual
-    storyCards[currentIndex].classList.add('focused');
-    
-    // Opción adicional: desplazar la tarjeta al centro de la vista si es necesario
-    storyCards[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+//----------------------------------------------------------------
+const openCardInfo = () =>{
+  document.querySelector('.card-container').classList.remove('display-none');
+  document.querySelector('.grid-container').classList.add('grid-template-3');
 }
-
+const tarjetaHistoria = document.querySelectorAll('.card');
+tarjetaHistoria.forEach(card =>{
+  card.addEventListener('click', openCardInfo);
+})
+let currentCuento = -1  ;
+function updateFocus(indexCuento) {
+    tarjetaHistoria.forEach(card => card.classList.remove('featured-card'));
+    tarjetaHistoria[indexCuento].classList.add('featured-card');
+    currentCuento = indexCuento;
+}
 // Evento de teclado para detectar las flechas
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowRight') {
-      currentIndex = (currentIndex + 1) % storyCards.length;
+    updateFocus(currentCuento+1);
+    openCardInfo();
   } else if (event.key === 'ArrowLeft') {
-      currentIndex = (currentIndex - 1 + storyCards.length) % storyCards.length;
-  } else if (event.key === 'ArrowDown') {
-      currentIndex = (currentIndex + 3) < storyCards.length ? currentIndex + 3 : currentIndex;
-  } else if (event.key === 'ArrowUp') {
-      currentIndex = (currentIndex - 3) >= 0 ? currentIndex - 3 : currentIndex;
+    updateFocus(currentCuento-1);
+    openCardInfo();
   }
-  updateFocus();
 });
 
-
-// Asegura que el primer elemento esté enfocado al cargar la página
-updateFocus();
-
-function updateFocus() {
-  console.log('Current Index:', currentIndex); // Depuración
-  storyCards.forEach(card => card.classList.remove('focused'));
-  storyCards[currentIndex].classList.add('focused');
-  storyCards[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
 
 // Opcional: Ocultar la sección al hacer clic en ella
 /*seccion.addEventListener('click', () => {

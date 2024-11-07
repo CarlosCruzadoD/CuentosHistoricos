@@ -9,7 +9,7 @@
 }
 
 body{
-   /* overflow: hidden;*/
+    overflow: hidden;
     scroll-behavior: smooth; /* Desplazamiento suave */
     font-family: "SUSE", sans-serif;
 }
