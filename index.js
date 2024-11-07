@@ -218,11 +218,59 @@ btnMenu.addEventListener('click', ()=>{
 })
 
 
-// Opcional: Ocultar la sección al hacer clic en ella
-seccion.addEventListener('click', () => {
-  seccion.classList.remove('visible');
-  localStorage.setItem('seccionVisible', 'false'); // Actualizar el estado
+
+
+//Función de los botones, para elegir cuentos
+// Selecciona todas las tarjetas de cuentos
+document.addEventListener('DOMContentLoaded', () => {
+  const tarjetaHistoria = document.querySelectorAll('.card');
+  tarjetaHistoria.forEach(card => {
+      card.addEventListener('click', () => {
+          document.querySelector('.card-container').classList.remove('display-none');
+          document.querySelector('.grid-container').classList.add('grid-template-3'); // Asegúrate de que esta clase sea correcta
+      });
+  });
+});
+
+// Función para actualizar el enfoque en la tarjeta seleccionada
+function updateFocus() {
+    // Remueve la clase de enfoque de todas las tarjetas
+    storyCards.forEach(card => card.classList.remove('focused'));
+    
+    // Añade la clase de enfoque a la tarjeta actual
+    storyCards[currentIndex].classList.add('focused');
+    
+    // Opción adicional: desplazar la tarjeta al centro de la vista si es necesario
+    storyCards[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Evento de teclado para detectar las flechas
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowRight') {
+      currentIndex = (currentIndex + 1) % storyCards.length;
+  } else if (event.key === 'ArrowLeft') {
+      currentIndex = (currentIndex - 1 + storyCards.length) % storyCards.length;
+  } else if (event.key === 'ArrowDown') {
+      currentIndex = (currentIndex + 3) < storyCards.length ? currentIndex + 3 : currentIndex;
+  } else if (event.key === 'ArrowUp') {
+      currentIndex = (currentIndex - 3) >= 0 ? currentIndex - 3 : currentIndex;
+  }
+  updateFocus();
 });
 
 
+// Asegura que el primer elemento esté enfocado al cargar la página
+updateFocus();
 
+function updateFocus() {
+  console.log('Current Index:', currentIndex); // Depuración
+  storyCards.forEach(card => card.classList.remove('focused'));
+  storyCards[currentIndex].classList.add('focused');
+  storyCards[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Opcional: Ocultar la sección al hacer clic en ella
+/*seccion.addEventListener('click', () => {
+  seccion.classList.remove('visible');
+  localStorage.setItem('seccionVisible', 'false'); // Actualizar el estado
+});*/

@@ -36,9 +36,12 @@ body{
 
 @media screen and (max-width:1024px) {
     #header ul{
-        display: none;
+        display: flex;
     }
     .icon-menu{
+        display: none;
+    }
+    .fixed{
         display: block;
     }
     .menu-options{
@@ -67,3 +70,10 @@ body{
         display: none;
     }
 }
+.card.focused {
+    border: 2px solid #3498db; /* Cambia el color del borde */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Añade un efecto de sombra */
+    transform: scale(1.05); /* Agranda ligeramente la tarjeta */
+    transition: all 0.3s ease;
+}
+
