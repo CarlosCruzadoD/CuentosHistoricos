@@ -1,3 +1,21 @@
+//-----------------------------------------------------------------------------
+//Obtener Todos los cuentos
+let cuentos = [];
+// Usando fetch para leer el archivo JSON
+fetch('./data/cuentos.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // Convierte la respuesta a un objeto JSON
+  })
+  .then(data => {
+    cuentos = data.cuentos;
+  })
+  .catch(error => {
+    console.error('Hubo un problema con la solicitud fetch:', error);
+  });
+//-----------------------------------------------------------------------------
 //Funcion para dezlisar al hacer scroll o presionar las teclas
 let currentSection = 1;
 const sections = document.querySelectorAll('section');
@@ -223,13 +241,30 @@ btnMenu.addEventListener('click', ()=>{
   }  
 })
 //----------------------------------------------------------------
-const openCardInfo = () =>{
+const openCardInfo = (titulo) =>{
   document.querySelector('.card-container').classList.remove('display-none');
-  document.querySelector('.grid-container').classList.add('grid-template-3');
+  document.querySelector('.grid-container').classList.add('grid-template-3');  
+  cuentos.forEach((cuento)=>{    
+    if(titulo == cuento.titulo){
+      console.log(cuento.titulo);
+      document.querySelector('.info-title').innerHTML = cuento.titulo;
+      document.querySelector('.info-autor').innerHTML = cuento.autor;
+      document.querySelector('.img-cuento').src = cuento.imagen;
+      document.querySelector('.descri-info').innerHTML = cuento.descripcion;
+    }
+  })
 }
 const tarjetaHistoria = document.querySelectorAll('.card');
 tarjetaHistoria.forEach(card =>{
-  card.addEventListener('click', openCardInfo);
+  card.addEventListener('click', ()=>{
+    openCardInfo(card.querySelector('.card-title').innerHTML);    
+    tarjetaHistoria.forEach(card =>{
+      card.classList.remove('featured-card');
+      card.querySelector('audio').pause();
+    })
+    card.classList.add('featured-card');
+    card.querySelector('audio').play();
+  });
 })
 let currentCuento = -1  ;
 function updateFocus(indexCuento) {
@@ -241,12 +276,31 @@ function updateFocus(indexCuento) {
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowRight') {
     updateFocus(currentCuento+1);
-    openCardInfo();
+    openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
   } else if (event.key === 'ArrowLeft') {
     updateFocus(currentCuento-1);
-    openCardInfo();
+    openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
   }
 });
+
+
+//-----------------------------------------------
+const btnLeerCuento = document.getElementById('btnLeerCuento');
+
+btnLeerCuento.addEventListener('click',()=>{
+  document.querySelector('.grid-container').classList.add('display-none');  
+  document.querySelector('.test').classList.add('active');  
+  document.querySelector('.texto-card').classList.remove('display-none');  
+})
+
+const btnCuentoCerrar = document.getElementById('btnCuentoCerrar');
+
+btnCuentoCerrar.addEventListener('click',()=>{
+  document.querySelector('.grid-container').classList.remove('display-none');  
+  document.querySelector('.test').classList.remove('active');  
+  document.querySelector('.texto-card').classList.add('display-none');  
+})
+
 
 
 // Opcional: Ocultar la sección al hacer clic en ella

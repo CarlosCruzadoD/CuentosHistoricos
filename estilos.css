@@ -1,7 +1,7 @@
 @import url(estilos/styles.css);
 @import url(estilos/InicioEstilos.css);
 @import url(estilos/Contactenos.css);
-
+@import url(estilos/Historias.css);
 
 *{
     margin: 0;
@@ -20,7 +20,9 @@ body{
 .grid-template-3{
     grid-template-columns: repeat(3, 1fr);
 }
-
+.display-none{
+    display: none;
+}
 
 
 

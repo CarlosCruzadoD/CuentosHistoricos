@@ -1,0 +1,174 @@
+#Historias{
+    height: 100vh;
+}
+.options{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: rgb(247, 247, 247);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+.historias{
+    display: flex;
+    height: 100%;
+    max-height: 700px;
+    align-items: center;
+    justify-content: center ;
+}
+.card-container{
+    width: 100%;
+    height: 100%;        
+    padding: 10px;   
+    display: flex; 
+    position: relative;
+    justify-content: right;
+    background-color: blue;
+}
+.texto-card{
+    width: 70%;
+    height: 100%;  
+}
+.test.active{
+    transform: scaleX(10);
+    transition: transform 5s ease 1s;
+    /*width: 100%;*/
+}
+.test{    
+    background-color: rgb(224, 224, 224);
+    width: 10%;
+    height: 100%;
+    padding: 10px;
+    transform-origin: left;
+    
+}
+
+.info-card{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: gray;
+    max-width: 500px;
+    width: 100%;
+    height: 100%;    
+    border-radius: 40px;    
+}
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    /*grid-template-columns: repeat(4, 1fr);*/
+    gap: 20px;
+    height: 100%;
+    padding: 20px;
+    justify-content: center;
+    overflow-y: scroll;
+}
+
+.card {
+    background: #f5f5f5;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    transition: transform 0.1s ease;
+    min-width: 240px;
+    max-width: 240px;
+    min-height: 250px;
+    max-height: 330px;
+    cursor: pointer;
+}
+.card:hover {
+    transform: scale(1.05); 
+}
+
+
+.image-container {
+    width: 100%;
+    height: 80%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    margin-bottom: 10px;
+    
+}
+
+.card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.card-title {
+    margin-top: 0.5rem;
+    text-align: center;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.featured-card {
+    background-color: white;
+}
+
+.featured-card .image-container {
+    border-color: #4CAF50;
+}
+
+.info-title{
+    text-align: center;
+    margin: 20px;
+
+}
+.info-autor{
+    text-align: center;
+}
+.imagen-info{
+    border: 2px solid #ddd;
+    width: 250px;
+    height: 200px;
+    border-radius: 20px;
+    margin: 20px 100px;
+    text-align: center;
+    line-height: 200px;
+    
+    
+}
+.descri-info{
+    border: 2px solid #ddd;
+    width: 250px;
+    height: 200px;
+    border-radius: 20px;
+    margin: 20px 100px;
+    text-align: center;
+    line-height: 200px;
+
+}
+.cerrando{
+    margin: 10px 25px;
+    width: 40px;
+    height: 30px;
+    border-radius: 10px;
+     
+}
+.bu-verde{
+    width: 100px;
+    height: 40px;
+    margin: auto 170px;
+    background-color: #388E3C;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+    
+
+}
+.img-cuento{
+    width: 100%;
+    height: 100%;
+}
+
+
