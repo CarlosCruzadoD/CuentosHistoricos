@@ -1,3 +1,6 @@
+
+let cuentoInfo = false;
+let cuentoTexto = false;
 //-----------------------------------------------------------------------------
 //Obtener Todos los cuentos
 let cuentos = [];
@@ -17,7 +20,7 @@ fetch('./data/cuentos.json')
   });
 //-----------------------------------------------------------------------------
 //Funcion para dezlisar al hacer scroll o presionar las teclas
-let currentSection = 1;
+let currentSection = 0;
 const sections = document.querySelectorAll('section');
 const scrollThreshold = 10; 
 let isScrolling = false; 
@@ -28,25 +31,60 @@ function scrollToSection(index) {
     currentSection = index;
   }
 }
+let noScroll= false;
 document.addEventListener('wheel', (event) => {
   if (isScrolling) return;
   isScrolling = true;
   setTimeout(() => { isScrolling = false; }, 600);
-  if (event.deltaY > scrollThreshold) {
-    scrollToSection(currentSection + 1);
-  } else if(currentSection != 0){
-    scrollToSection(currentSection - 1);
+  if(!noScroll){
+    if (event.deltaY > scrollThreshold) {
+      scrollToSection(currentSection + 1);
+    } else if(currentSection != 0){
+      scrollToSection(currentSection - 1);
+    }
   }
+  
 });
+document.querySelector('.grid-container').addEventListener('mouseenter', ()=>{
+  noScroll = true;
+})
+document.querySelector('.grid-container').addEventListener('mouseleave', ()=>{
+  noScroll = false;
+})
 
 document.addEventListener('keydown', (event) => {
   if (isScrolling) return; 
-  if (event.key === 'Enter' || event.key === 'ArrowDown') {
+  if(currentSection == 0){
+    if (event.key === 'Enter') {
+      console.log(currentSection);
+      scrollToSection(currentSection + 1);
+    }
+  }
+  if(currentSection==1){
+    if (event.key === 'Enter') {
+      let key = false;
+      tarjetaHistoria.forEach(card =>{
+          if(card.classList.contains("featured-card")){
+            key = true;
+          }
+        });
+        if(key)startCuento();   
+    }
+    if (event.key === 'Escape') {
+      if(cuentoTexto){
+        stopCuento();
+        cuentoTexto = false;
+      }else{
+        closeCardInfo();
+      }
+    }
+  }
+  if (event.key === 'ArrowDown') {
+    console.log(currentSection);
     scrollToSection(currentSection + 1);
-    console.log(currentSection);
   } else if (event.key === 'ArrowUp') {
-    scrollToSection(currentSection - 1);
     console.log(currentSection);
+    scrollToSection(currentSection - 1);
   }
 });
 //----------------------------------------------------------------------
@@ -128,7 +166,7 @@ if (localStorage.getItem('seccionVisible') === 'true') {
   perfilView.classList.remove('display-none');
 }
 document.getElementById('btn-perfil-Login').addEventListener('click', () => {
-  console.log(perfil);
+  noScroll = true;
   header.classList.add('display-none');
   mainPage.classList.add('display-none');
   perfilView.classList.remove('display-none');
@@ -145,6 +183,7 @@ document.getElementById('btnBInicioS').addEventListener('click', () => {
   imgPerfil.style.transform = 'translate(0, 0)'
 })
 closePerfil.addEventListener('click',()=>{
+  noScroll = false;
   header.classList.remove('display-none');
   mainPage.classList.remove('display-none');
   perfilView.classList.add('display-none');
@@ -218,8 +257,6 @@ const swicthNombre = (nombre)=>{
         document.querySelector('.center-square').classList.add('expand');
       }        
       break;  
-    default:
-      break;
   }
 }
 const btnContactenos = document.querySelectorAll('.btnAlumnos');
@@ -241,6 +278,9 @@ btnMenu.addEventListener('click', ()=>{
   }  
 })
 //----------------------------------------------------------------
+const audioDesc = document.querySelector('.audioDesc');
+const audioText = document.querySelector('.audioText');
+const textoCuento = document.querySelector('.texto');
 const openCardInfo = (titulo) =>{
   document.querySelector('.card-container').classList.remove('display-none');
   document.querySelector('.grid-container').classList.add('grid-template-3');  
@@ -250,20 +290,39 @@ const openCardInfo = (titulo) =>{
       document.querySelector('.info-title').innerHTML = cuento.titulo;
       document.querySelector('.info-autor').innerHTML = cuento.autor;
       document.querySelector('.img-cuento').src = cuento.imagen;
-      document.querySelector('.descri-info').innerHTML = cuento.descripcion;
+      document.querySelector('.descri-info p').innerHTML = cuento.descripcion;
+      textoCuento.querySelector('p').innerHTML = cuento.texto;
+      textoCuento.querySelector('h2').innerHTML = cuento.titulo;
+      audioDesc.src = cuento.audioDesc;
+      audioText.src = cuento.audioTexto;
     }
   })
+}
+const closeCardInfo = () => {
+  document.querySelector('.card-container').classList.add('display-none');
+  document.querySelector('.grid-container').classList.remove('grid-template-3');  
+  tarjetaHistoria.forEach(card =>{
+    card.classList.remove('featured-card');      
+  });
+  DetenerAudio(audioDesc); 
+  DetenerAudio(audioText); 
+}
+const DetenerAudio = (audio) =>{
+  audio.pause();
+}
+const ReproducirAudio = (audio) =>{
+  audio.currentTime = 0;
+  audio.play();
 }
 const tarjetaHistoria = document.querySelectorAll('.card');
 tarjetaHistoria.forEach(card =>{
   card.addEventListener('click', ()=>{
     openCardInfo(card.querySelector('.card-title').innerHTML);    
     tarjetaHistoria.forEach(card =>{
-      card.classList.remove('featured-card');
-      card.querySelector('audio').pause();
+      card.classList.remove('featured-card');      
     })
     card.classList.add('featured-card');
-    card.querySelector('audio').play();
+    ReproducirAudio(audioDesc);
   });
 })
 let currentCuento = -1  ;
@@ -277,9 +336,11 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowRight') {
     updateFocus(currentCuento+1);
     openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
+    ReproducirAudio(audioDesc);
   } else if (event.key === 'ArrowLeft') {
     updateFocus(currentCuento-1);
     openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
+    ReproducirAudio(audioDesc);
   }
 });
 
@@ -287,19 +348,41 @@ document.addEventListener('keydown', (event) => {
 //-----------------------------------------------
 const btnLeerCuento = document.getElementById('btnLeerCuento');
 
-btnLeerCuento.addEventListener('click',()=>{
-  document.querySelector('.grid-container').classList.add('display-none');  
-  document.querySelector('.test').classList.add('active');  
-  document.querySelector('.texto-card').classList.remove('display-none');  
-})
+
+const startCuento = ()=>{
+  document.querySelector('.muestra-historias').classList.add('oculto');  
+  document.querySelector('.options') .classList.add('display-none');
+  textoCuento.classList.add('active');  
+  document.querySelector('.btnCuentoCerrado').classList.add('display-none');
+  document.querySelector('.btnCuentoAbierto').classList.remove('display-none');
+  DetenerAudio(audioDesc);
+  ReproducirAudio(audioText);
+  cuentoTexto = true;
+}
+
+btnLeerCuento.addEventListener('click',startCuento);
+
+const stopCuento = () =>{
+  document.querySelector('.muestra-historias').classList.remove('oculto');  
+  document.querySelector('.options') .classList.remove('display-none');
+  textoCuento.classList.remove('active');  
+  document.querySelector('.btnCuentoCerrado').classList.remove('display-none');
+  document.querySelector('.btnCuentoAbierto').classList.add('display-none');
+  DetenerAudio(audioDesc); 
+  DetenerAudio(audioText); 
+}
 
 const btnCuentoCerrar = document.getElementById('btnCuentoCerrar');
 
+
 btnCuentoCerrar.addEventListener('click',()=>{
-  document.querySelector('.grid-container').classList.remove('display-none');  
-  document.querySelector('.test').classList.remove('active');  
-  document.querySelector('.texto-card').classList.add('display-none');  
-})
+  if(cuentoTexto){
+    stopCuento();
+    cuentoTexto = false;
+  }else{
+    closeCardInfo();
+  }
+});
 
 
 
