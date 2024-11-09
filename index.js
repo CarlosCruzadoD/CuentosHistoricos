@@ -165,6 +165,47 @@ localStorage.setItem('seccionVisible', 'false');
 if (localStorage.getItem('seccionVisible') === 'true') {
   perfilView.classList.remove('display-none');
 }
+
+document.getElementById('btn-submit-registrar').addEventListener('click', () => {
+  console.log(perfil);
+  header.classList.add('display-none');
+  mainPage.classList.add('display-none');
+  perfilView.classList.remove('display-none');
+  overlay.classList.add('overlay-active');
+  //para capturar datos del formulario de registro
+  const registerData = {
+    nombre: document.getElementById("register-nombre").value,
+    apellidos: document.getElementById("register-apellidos").value,
+    correo: document.getElementById("register-email").value,
+    contrasena: document.getElementById("register-password").value,
+    confirmar_contrasena: document.getElementById("register-confirm-password").value,
+    pais: document.getElementById("register-pais").value,
+    edad: parseInt(document.getElementById("register-edad").value, 10),
+    discapacidad: document.getElementById("register-discapacidad").value
+  };
+    //Convierte los datos a JSON
+  const registerJSON = JSON.stringify(registerData);
+  console.log("Datos de registro:", registerJSON);
+  fetch('/data/register', { method: 'POST', body: registerJSON })
+});
+
+document.getElementById('btn-submit-login').addEventListener('click', () => {
+  console.log(perfil);
+  header.classList.add('display-none');
+  mainPage.classList.add('display-none');
+  perfilView.classList.remove('display-none');
+  overlay.classList.add('overlay-active');
+  // Función para capturar datos del formulario de inicio de sesión
+  const loginData = {
+    correo: document.getElementById("correo").value,
+    contrasena: document.getElementById("password").value
+  }
+  // Convierte los datos a JSON
+  const loginJSON = JSON.stringify(loginData);
+  console.log("Datos de inicio de sesión:", loginJSON);
+  fetch('/data/login.json', { method: 'POST', body: loginJSON })
+});
+
 document.getElementById('btn-perfil-Login').addEventListener('click', () => {
   noScroll = true;
   header.classList.add('display-none');
@@ -172,6 +213,7 @@ document.getElementById('btn-perfil-Login').addEventListener('click', () => {
   perfilView.classList.remove('display-none');
   overlay.classList.add('overlay-active');
 });
+
 //cambio de posicion de la imagen en el perfil
 const imgPerfil = document.querySelector('.selector')
 const registerBtn = document.getElementById('btn-perfil-Registrar');

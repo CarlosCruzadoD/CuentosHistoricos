@@ -148,29 +148,28 @@
                             <h3>Ingresa tus datos para iniciar esta aventura</h3>
                             <form id="registerForm" onsubmit="return validateForm()">
                                <div class="form-2">
-                                   <input type="text" placeholder="Nombre" name="nombre" required>
-                                   <input type="text" placeholder="Apellidos" name="apellidos" required>
+                                   <input type="text" id="register-nombre" placeholder="Nombre" name="nombre" required>
+                                   <input type="text" id="register-apellidos" placeholder="Apellidos" name="apellidos" required>
                                </div>                             
-                                <input type="email" placeholder="Correo" name="correo" required>
+                                <input type="email" placeholder="Correo" id="register-email" name="correo" required>
                                 <div class="form-2">
-                                   <input type="password" placeholder="Contraseña" name="password" required>
-                                   <input type="password" placeholder="Confirmar contraseña" name="confirm_password" required>
+                                   <input type="password" id="register-password" placeholder="Contraseña" name="password" required>
+                                   <input type="password" id="register-confirm-password" placeholder="Confirmar contraseña" name="confirm_password" required>
                                 </div>
                                 <div class="form-2">
-                                   <input type="text" placeholder="País" name="pais" required>
-                                   <input type="number" placeholder="Edad" name="edad" min="0" required>
+                                   <input type="text" id="register-pais" placeholder="País" name="pais" required>
+                                   <input type="number" id="register-edad" placeholder="Edad" name="edad" min="0" required>
                                 </div>                            
-                                <select name="discapacidad">
+                                <select id="register-discapacidad" name="discapacidad">
                                     <option value="">Discapacidad</option>
                                     <option value="visual">Visual</option>
                                     <option value="auditiva">Auditiva</option>
-                                    <option value="motriz">Motriz</option>
                                     <option value="ninguna">Ninguna</option>
                                 </select>                             
                             </form>
                             <div class="btn-dinamic-register">
                                 <button class="btn-perfil btn-cancelar-register btn-transparent">Cancelar</button>
-                                <button class="btn-perfil btn-registrar" type="submit">Registrarse</button>
+                                <button class="btn-perfil btn-registrar" id="btn-submit-registrar"  type="submit">Registrarse</button>
                              </div>
                         </div>                       
                      </div>                     
@@ -193,7 +192,7 @@
                                 <div>                             
                                    <p class="forgot-password"><a href="#">Recuperar Contraseña</a></p>
                                </div>
-                                <button type="submit" class="btn-perfil btn-IniciarSesion">Iniciar Sesión</button>                
+                                <button type="submit" id="btn-submit-login" class="btn-perfil btn-IniciarSesion">Iniciar Sesión</button>                
                             </form>                           
                         </div>                         
                         <div class="other-login">
@@ -349,7 +348,7 @@
                 </div>
             </div>            
         </section>
-        <section id="Contactenos" class="contacteno container-xl">
+        <section id="contactenos" class="contactenos container-xl">
             <div class="contactenos-container">
                 <div class="fotos">
                     <h2>Historias Mágicas</h2>
@@ -366,27 +365,31 @@
                     <div class="background-contacto">
                         <div class="btn-contactos">
                             <button class="btnAlumnos">
+                                <img src="ruta/a/imagen1.jpg" alt="José Luis Cerff Aguilar">
                                 José Luis Cerff Aguilar
                             </button>
                             <div class="line-contacto"></div>
                             <button class="btnAlumnos">
+                                <img src="ruta/a/imagen2.jpg" alt="David Elías Chávez Tintaya">
                                 David Elías Chávez Tintaya
                             </button>
                             <div class="line-contacto"></div>
                             <button class="btnAlumnos">
+                                <img src="ruta/a/imagen3.jpg" alt="Mauro Alberto Contreras San Miguel">
                                 Mauro Alberto Contreras San Miguel
                             </button>
                             <div class="line-contacto"></div>
                             <button class="btnAlumnos">
+                                <img src="ruta/a/imagen4.jpg" alt="Luz María Crisóstomo Delgado">
                                 Luz María Crisóstomo Delgado
                             </button>
                             <div class="line-contacto"></div>
                             <button class="btnAlumnos">
-                                Carlos Tadeo Cruzado Díaz                         
+                                <img src="ruta/a/imagen5.jpg" alt="Carlos Tadeo Cruzado Díaz">
+                                Carlos Tadeo Cruzado Díaz
                             </button>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </section>
