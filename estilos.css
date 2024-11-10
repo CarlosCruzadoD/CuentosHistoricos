@@ -12,6 +12,7 @@ body{
     overflow: hidden;
     scroll-behavior: smooth; /* Desplazamiento suave */
     font-family: "SUSE", sans-serif;
+    position: relative;
 }
 
 
@@ -30,27 +31,44 @@ body{
 
 
 
-
-
 /*Media Querys: Para el diseño responsive */
 
 /*--------------------------------------------------------------*/
 
 @media screen and (max-width:1024px) {
-    #header ul{
-        display: flex;
+    body{
+        overflow: auto;
     }
-    .icon-menu{
+    #header ul{
         display: none;
     }
-    .fixed{
+    .icon-menu{
         display: block;
+        position: fixed;
+    }
+    #Historias{
+        height: auto;
+    }
+    .historias{
+        max-height: none;
+    }
+
+    .info-card{
+        max-width: none;
+        padding: 40px;
     }
     .menu-options{
         display: block;        
     }
     .card-container{
         position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw; 
+        height: 100vh;
+        z-index: 9999; 
+        overflow-y: hidden;
+        margin:0;
     }
     .contactenos-container{
         flex-wrap: wrap;
@@ -72,10 +90,17 @@ body{
         display: none;
     }
 }
-.card.focused {
-    border: 2px solid #3498db; /* Cambia el color del borde */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Añade un efecto de sombra */
-    transform: scale(1.05); /* Agranda ligeramente la tarjeta */
-    transition: all 0.3s ease;
+
+@media (max-width: 768px) {
+    .imagen-info{
+        width: 150px;
+    }
+    .descri-info{
+        padding: 0;
+    }
+    .info-card{
+        padding: 5px;
+    }
 }
+
 
