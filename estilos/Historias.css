@@ -249,4 +249,18 @@
     object-fit: cover;
 }
 
+#btnSilencio.icon-select, #btnFavorito.icon-select{
+    background-color: rgb(225, 151, 151);
+}
 
+#btnSilencio.icon-disable, #btnFavorito.icon-disable{
+    background-color: transparent;
+    border: 2px solid rgb(163, 163, 163);
+}
+#btnSilencio.icon-disable svg, #btnFavorito.icon-disable svg{
+    fill: rgb(167, 164, 164);
+}
+.icon-disable:hover{
+    transform: scale(1)!important;
+    cursor: not-allowed;
+}

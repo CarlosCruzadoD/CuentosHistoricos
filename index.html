@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+    <audio class="audio-guia" src="./cuentos/Sections/Audio-Bienvenida.mp3"></audio>
     <div class="background">
         <div class="icon-menu">
             <button class="btnMenu hola">
@@ -57,13 +58,8 @@
                                 </li>
                                 <li>                                    
                                     <button id="btn-perfil-Login" class="btn-main btn-perfil">
-                                        <svg class="icon-perfil" 
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
-                                            viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
-                                            <path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z">
-                                            </path>
-                                        </svg>
-                                        Perfil
+                                        <svg class="display-none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path></svg>
+                                        <span>Perfil</span>
                                     </button>
                                 </li>
                             </ul>
@@ -89,7 +85,7 @@
                     <img class="fondo-central" src="./img/niñosvolando.png" alt="">
                 </div>
                 <div class="next-page">
-                    <button class="btn-main btn-start" type="button">Empezar</button>
+                    <button id="btnNextPage" class="btn-main btn-start" type="button">Empezar</button>
                     <div class="other-page">
                         <div class="slide-down">
                         </div>
@@ -112,7 +108,7 @@
                          <img class="fondo-central" src="./img/niñosvolando.png" alt="">
                      </div>
                  </div>
-                 <div class="register">
+                 <div class="container-login register">
                     <div class="other-form-register">
                         <div class="other-register">                     
                             <div class="btn-other-login">
@@ -160,8 +156,7 @@
                                    <input type="text" id="register-pais" placeholder="País" name="pais" required>
                                    <input type="number" id="register-edad" placeholder="Edad" name="edad" min="0" required>
                                 </div>                            
-                                <select id="register-discapacidad" name="discapacidad">
-                                    <option value="">Discapacidad</option>
+                                <select id="register-discapacidad" name="discapacidad" placeholder="Hola">
                                     <option value="visual">Visual</option>
                                     <option value="auditiva">Auditiva</option>
                                     <option value="ninguna">Ninguna</option>
@@ -174,47 +169,93 @@
                         </div>                       
                      </div>                     
                  </div>
-                 <div class="login">
-                     <div class="login-formulario">
-                        <div class="register-container">
-                            <p class="register-link">¿No tiene una cuenta? 
-                                <button class="btn-register" id="btn-perfil-Registrar">
-                                    Registrate ahora
-                                </button>
-                            </p>
+                 <div class="container-login login-user">
+                    <div class="login">
+                        <div class="login-formulario">
+                           <div class="register-container">
+                               <p class="register-link">¿No tiene una cuenta? 
+                                   <button class="btn-register" id="btn-perfil-Registrar">
+                                       Registrate ahora
+                                   </button>
+                               </p>
+                           </div>
+                           <div class="info-login">
+                               <h2>Bienvenido de nuevo!</h2>
+                               <h3>Inicio de Sesion</h3>
+                               <form action="login.html" method="post">
+                                   <input type="email" id="correo" name="correo" required placeholder="Email">
+                                   <input type="password" id="password" name="password" required placeholder="Contraseña">
+                                   <div>                             
+                                      <p class="forgot-password"><a href="#">Recuperar Contraseña</a></p>
+                                  </div>
+                               </form>                           
+                               <button id="btn-submit-login" class="btn-perfil btn-IniciarSesion">Iniciar Sesión</button>                
+                           </div>                         
+                           <div class="other-login">
+                               <div class="text">
+                                   <div class="line"></div>
+                                   <span>Inicia Sesion con</span>
+                                   <div class="line"></div>
+                               </div>                            
+                               <div class="btn-other-login">
+                                   <button class="btnIcon">
+                                       <img class="img-icon" src="img/icons/google.png" alt="">
+                                   </button>
+                                   <button class="btnIcon">
+                                       <img class="img-icon" src="img/icons/macos.png" alt="">
+                                   </button>
+                                   <button class="btnIcon">
+                                       <img class="img-icon" src="img/icons/facebook.png" alt="">
+                                   </button>
+                               </div>                                
+                           </div>
                         </div>
-                        <div class="info-login">
-                            <h2>Bienvenido de nuevo!</h2>
-                            <h3>Inicio de Sesion</h3>
-                            <form action="login.html" method="post">
-                                <input type="email" id="correo" name="correo" required placeholder="Email">
-                                <input type="password" id="password" name="password" required placeholder="Contraseña">
-                                <div>                             
-                                   <p class="forgot-password"><a href="#">Recuperar Contraseña</a></p>
-                               </div>
-                                <button type="submit" id="btn-submit-login" class="btn-perfil btn-IniciarSesion">Iniciar Sesión</button>                
-                            </form>                           
-                        </div>                         
-                        <div class="other-login">
-                            <div class="text">
-                                <div class="line"></div>
-                                <span>Inicia Sesion con</span>
-                                <div class="line"></div>
-                            </div>                            
-                            <div class="btn-other-login">
-                                <button class="btnIcon">
-                                    <img class="img-icon" src="img/icons/google.png" alt="">
-                                </button>
-                                <button class="btnIcon">
-                                    <img class="img-icon" src="img/icons/macos.png" alt="">
-                                </button>
-                                <button class="btnIcon">
-                                    <img class="img-icon" src="img/icons/facebook.png" alt="">
-                                </button>
-                            </div>                                
+                    </div>        
+                    <div class="info-cuenta display-none">
+                        <button>Dashboard</button>
+                       <h2>Bienvenido</h2>
+                       <div class="cuenta-data">
+                        <div class="campo-nombre">
+                            <span>
+                                Nombre:
+                            </span>
+                            <span class="data"> Ejem</span>
                         </div>
-                     </div>
-                 </div>        
+                        <div class="campo-apellido">
+                            <span>
+                                Apellido:
+                            </span>
+                            <span class="data"> Ejem</span>
+                        </div>
+                        <div class="campo-correo">
+                            <span>
+                                Correo:
+                            </span>
+                            <span class="data"> Ejem</span>
+                        </div>
+                        <div class="campo-pais">
+                            <span>
+                                Pais:
+                            </span>
+                            <span class="data"> Ejem</span>
+                        </div>
+                        <div class="campo-edad">
+                            <span>
+                                Edad:
+                            </span>
+                            <span class="data"> Ejem</span>
+                        </div>
+                        <div class="campo-discapacidad">
+                            <span>
+                                Discapacidad:
+                            </span>
+                            <span class="data"> Ejem</span>
+                        </div>
+                       </div>                       
+                       <button id="btnCloseSesion" class="btn-perfil">Cerrar Sesion</button>
+                    </div>
+                 </div>
+                 
             </div>
            
         </div>   
@@ -317,14 +358,14 @@
                                 <button id="btnLeerCuento" class="bu-verde" >Entrar</button>  
                             </div>
                             <div class="btnCuentoAbierto display-none">
-                                <button>
+                                <button id="btnFavorito" class="icon-disable">
                                     <div class="icon-favorito">
-                                        <img src="./img/icons/favorito.png" alt="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"></path></svg> 
                                     </div>
                                 </button>    
-                                <button>
+                                <button id="btnSilencio">
                                     <div class="icon-silencio">
-                                        <img src="img/icons/silencio.png" alt="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16 21c3.527-1.547 5.999-4.909 5.999-9S19.527 4.547 16 3v2c2.387 1.386 3.999 4.047 3.999 7S18.387 17.614 16 19v2z"></path><path d="M16 7v10c1.225-1.1 2-3.229 2-5s-.775-3.9-2-5zM4 17h2.697l5.748 3.832a1.004 1.004 0 0 0 1.027.05A1 1 0 0 0 14 20V4a1 1 0 0 0-1.554-.832L6.697 7H4c-1.103 0-2 .897-2 2v6c0 1.103.897 2 2 2zm0-8h3c.033 0 .061-.016.093-.019a1.027 1.027 0 0 0 .38-.116c.026-.015.057-.017.082-.033L12 5.868v12.264l-4.445-2.964c-.025-.017-.056-.02-.082-.033a.986.986 0 0 0-.382-.116C7.059 15.016 7.032 15 7 15H4V9z"></path></svg>
                                     </div>
                                 </button>   
                             </div>                             
@@ -402,6 +443,7 @@
         </span>
     </footer>
 
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
+    <script type="module" src="dashboard.js"></script>
 </body>
 </html>

@@ -36,9 +36,6 @@ body{
 /*--------------------------------------------------------------*/
 
 @media screen and (max-width:1024px) {
-    body{
-        overflow: auto;
-    }
     #header ul{
         display: none;
     }

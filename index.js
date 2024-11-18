@@ -1,3 +1,5 @@
+import * as user from './data/usuarios.js';
+
 
 let cuentoInfo = false;
 let cuentoTexto = false;
@@ -19,10 +21,10 @@ fetch('./data/cuentos.json')
     console.error('Hubo un problema con la solicitud fetch:', error);
   });
 //-----------------------------------------------------------------------------
-//Funcion para dezlisar al hacer scroll o presionar las teclas
+//Funcion para dezlisar al hacer scroll o presionar las tecla
 let currentSection = 0;
-const sections = document.querySelectorAll('section');
-const scrollThreshold = 10; 
+const sections = document.querySelectorAll('section'); 
+const scrollThreshold =10; 
 let isScrolling = false; 
 
 function scrollToSection(index) {
@@ -39,11 +41,12 @@ document.addEventListener('wheel', (event) => {
   if(!noScroll){
     if (event.deltaY > scrollThreshold) {
       scrollToSection(currentSection + 1);
+      reproAudioGuia();
     } else if(currentSection != 0){
       scrollToSection(currentSection - 1);
+      reproAudioGuia(currentSection);
     }
-  }
-  
+  }  
 });
 document.querySelector('.grid-container').addEventListener('mouseenter', ()=>{
   noScroll = true;
@@ -58,6 +61,7 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       console.log(currentSection);
       scrollToSection(currentSection + 1);
+      reproAudioGuia(currentSection);
     }
   }
   if(currentSection==1){
@@ -76,17 +80,43 @@ document.addEventListener('keydown', (event) => {
         cuentoTexto = false;
       }else{
         closeCardInfo();
+        reproAudioGuia(currentSection);
       }
     }
   }
   if (event.key === 'ArrowDown') {
     console.log(currentSection);
     scrollToSection(currentSection + 1);
+    reproAudioGuia(currentSection);
   } else if (event.key === 'ArrowUp') {
     console.log(currentSection);
     scrollToSection(currentSection - 1);
+    reproAudioGuia(currentSection);
   }
 });
+//----------------------------------------------------------------------
+//Configuracion de audio guia
+  const audioGuia = document.querySelector('.audio-guia');
+  const reproAudioGuia = (seccion) => {
+    switch(seccion){
+      case 0:
+        audioGuia.src = './cuentos/Sections/Audio-Bienvenida.mp3';
+        break;
+      case 1:
+        audioGuia.src = './cuentos/Sections/Audio-Historias.mp3';
+        break;
+      case 2:
+        audioGuia.src = './cuentos/Sections/Audio-Contactenos.mp3';
+        break;
+    }
+    ReproducirAudio(audioGuia);
+  }
+  document.addEventListener('DOMContentLoaded', ()=>{
+    //reproAudioGuia(currentCuento);
+    activarUser();
+    switchConfiguration();
+  })
+
 //----------------------------------------------------------------------
 //Funcion para Login
 let perfil = false;
@@ -129,7 +159,7 @@ let marcarSeccionActiva = () => {
           boton.innerHTML = btnHeader.innerHTML
         }
       })
-      btnHeader.innerHTML = sectionsHeader[indexSeccionActiva].id;
+      btnHeader.innerHTML = sectionsHeader[indexSeccionActiva].id;      
       listaPrimero[0].classList.remove('lista-actual-animacion')
       void listaPrimero[0].offsetWidth;
       listaPrimero[0].classList.add('lista-actual-animacion')
@@ -167,52 +197,163 @@ if (localStorage.getItem('seccionVisible') === 'true') {
 }
 
 document.getElementById('btn-submit-registrar').addEventListener('click', () => {
-  console.log(perfil);
   header.classList.add('display-none');
   mainPage.classList.add('display-none');
   perfilView.classList.remove('display-none');
   overlay.classList.add('overlay-active');
-  //para capturar datos del formulario de registro
-  const registerData = {
-    nombre: document.getElementById("register-nombre").value,
-    apellidos: document.getElementById("register-apellidos").value,
-    correo: document.getElementById("register-email").value,
-    contrasena: document.getElementById("register-password").value,
-    confirmar_contrasena: document.getElementById("register-confirm-password").value,
-    pais: document.getElementById("register-pais").value,
-    edad: parseInt(document.getElementById("register-edad").value, 10),
-    discapacidad: document.getElementById("register-discapacidad").value
-  };
-    //Convierte los datos a JSON
-  const registerJSON = JSON.stringify(registerData);
-  console.log("Datos de registro:", registerJSON);
-  fetch('/data/register', { method: 'POST', body: registerJSON })
+  const  nombre = document.getElementById("register-nombre").value;
+  const apellido = document.getElementById("register-apellidos").value;
+  const correo = document.getElementById("register-email").value;
+  const contra = document.getElementById("register-password").value;
+  const contraConf = document.getElementById("register-confirm-password").value;
+  const pais = document.getElementById("register-pais").value;
+  const edad = parseInt(document.getElementById("register-edad").value, 10);
+  const discapacidad = document.getElementById("register-discapacidad").value;
+  const inputRegister = document.querySelectorAll("#registerForm input");
+  let emptyInput = false;
+  inputRegister.forEach((input) => {
+    if(input.value == "" || input.value == null ) emptyInput = true;
+  })
+  if(emptyInput){
+    console.log("vacio");
+  }else {
+    if(contra == contraConf){
+      if(user.validarCorreo(correo)){
+        const registerData = {
+          nombre: nombre,
+          apellidos: apellido,
+          correo: correo,
+          contrasena: contra,
+          pais: pais,
+          edad: edad,
+          discapacidad: discapacidad,
+          cuentos: []
+        };
+        user.registrarUser(registerData);
+      }
+    }
+  }  
 });
-
+const correoUser = localStorage.getItem('correoUser');
+function actualizarDatosUser(){
+  localStorage.setItem('userLog',JSON.stringify(user.buscarUsuario(correoUser)));
+}
 document.getElementById('btn-submit-login').addEventListener('click', () => {
   console.log(perfil);
   header.classList.add('display-none');
   mainPage.classList.add('display-none');
   perfilView.classList.remove('display-none');
   overlay.classList.add('overlay-active');
-  // Función para capturar datos del formulario de inicio de sesión
-  const loginData = {
-    correo: document.getElementById("correo").value,
-    contrasena: document.getElementById("password").value
+  const correo = document.getElementById("correo").value;
+  const contra = document.getElementById("password").value;
+  if(user.validarCorreo(correo)){
+    if(user.autenticarUsuario(correo, contra)){
+      localStorage.setItem('correoUser', correo);
+      closeWinPerfil();
+      actualizarDatosUser();
+      activarUser();
+      switchConfiguration();
+    }    
   }
-  // Convierte los datos a JSON
-  const loginJSON = JSON.stringify(loginData);
-  console.log("Datos de inicio de sesión:", loginJSON);
-  fetch('/data/login.json', { method: 'POST', body: loginJSON })
 });
-
+//************************************************ */
+document.getElementById('btnNextPage').addEventListener('click', () => {
+  console.log(JSON.parse(localStorage.getItem('userLog')));
+})
+//************************************************ */
+const activarUser = () =>{
+  let userLog = JSON.parse(localStorage.getItem('userLog')) || null;
+  if(userLog !=null){
+    document.querySelector('#btn-perfil-Login svg').classList.remove('display-none');
+    document.querySelector('#btn-perfil-Login span').innerText = 'nombre';
+  }else{
+    document.querySelector('#btn-perfil-Login svg').classList.add('display-none');
+    document.querySelector('#btn-perfil-Login span').innerText = 'Perfil';
+  }
+}
+//Funcion para abrir el inicio de sesion
 document.getElementById('btn-perfil-Login').addEventListener('click', () => {
+  let userLog = JSON.parse(localStorage.getItem('userLog')) || null;
   noScroll = true;
   header.classList.add('display-none');
   mainPage.classList.add('display-none');
   perfilView.classList.remove('display-none');
   overlay.classList.add('overlay-active');
+  scrollToSection(0);
+  if(userLog !=null){
+    document.querySelector('.login').classList.add('display-none');
+    document.querySelector('.info-cuenta').classList.remove('display-none');
+    document.querySelector('.campo-nombre .data').innerText = userLog.nombre;
+    document.querySelector('.campo-apellido .data').innerText = userLog.apellidos;
+    document.querySelector('.campo-correo .data').innerText = userLog.correo;
+    document.querySelector('.campo-pais .data').innerText = userLog.pais;
+    document.querySelector('.campo-edad .data').innerText = userLog.edad;
+    document.querySelector('.campo-discapacidad .data').innerText = userLog.discapacidad;
+  }else{
+    document.querySelector('.login').classList.remove('display-none');
+    document.querySelector('.info-cuenta').classList.add('display-none');
+  }  
 });
+
+//Funcion para cerrar Sesion
+document.getElementById('btnCloseSesion').addEventListener('click', ()=>{
+  localStorage.removeItem('userLog');
+  closeWinPerfil();
+  activarUser();
+  switchConfiguration();
+})
+//Validar Si estamos en un perfil
+const validacionPerfil = () => {
+  let userLog = JSON.parse(localStorage.getItem('userLog')) || null;
+  if(userLog != null) return true;
+  else return false;
+}
+
+
+//Configuracio de Boton de Silencio
+const iconSilencioOff = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m21.707 20.293-2.023-2.023A9.566 9.566 0 0 0 21.999 12c0-4.091-2.472-7.453-5.999-9v2c2.387 1.386 3.999 4.047 3.999 7a8.113 8.113 0 0 1-1.672 4.913l-1.285-1.285C17.644 14.536 18 13.19 18 12c0-1.771-.775-3.9-2-5v7.586l-2-2V4a1 1 0 0 0-1.554-.832L7.727 6.313l-4.02-4.02-1.414 1.414 18 18 1.414-1.414zM12 5.868v4.718L9.169 7.755 12 5.868zM4 17h2.697l5.748 3.832a1.004 1.004 0 0 0 1.027.05A1 1 0 0 0 14 20v-1.879l-2-2v2.011l-4.445-2.964c-.025-.017-.056-.02-.082-.033a.986.986 0 0 0-.382-.116C7.059 15.016 7.032 15 7 15H4V9h.879L3.102 7.223A1.995 1.995 0 0 0 2 9v6c0 1.103.897 2 2 2z"></path></svg>'
+const iconSilencioOn = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16 21c3.527-1.547 5.999-4.909 5.999-9S19.527 4.547 16 3v2c2.387 1.386 3.999 4.047 3.999 7S18.387 17.614 16 19v2z"></path><path d="M16 7v10c1.225-1.1 2-3.229 2-5s-.775-3.9-2-5zM4 17h2.697l5.748 3.832a1.004 1.004 0 0 0 1.027.05A1 1 0 0 0 14 20V4a1 1 0 0 0-1.554-.832L6.697 7H4c-1.103 0-2 .897-2 2v6c0 1.103.897 2 2 2zm0-8h3c.033 0 .061-.016.093-.019a1.027 1.027 0 0 0 .38-.116c.026-.015.057-.017.082-.033L12 5.868v12.264l-4.445-2.964c-.025-.017-.056-.02-.082-.033a.986.986 0 0 0-.382-.116C7.059 15.016 7.032 15 7 15H4V9z"></path></svg>'
+let switchSilencio = false;
+const btnSilencio = document.getElementById('btnSilencio');
+const silenciarCuento = () => {  
+  switchSilencio = !switchSilencio;
+  if(switchSilencio){
+    btnSilencio.querySelector('.icon-silencio').innerHTML = iconSilencioOff;
+    DetenerAudio(audioText);
+  }else{
+    btnSilencio.querySelector('.icon-silencio').innerHTML = iconSilencioOn;
+    ReproducirAudio(audioText);
+  }
+}
+btnSilencio.addEventListener('click', silenciarCuento);
+const iconFavoritoOn = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"></path></svg> '
+const iconFavoritoOff = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 10.132v-6c0-1.103-.897-2-2-2H7c-1.103 0-2 .897-2 2V22l7-4.666L19 22V10.132z"></path></svg>'
+let switchFavorito = false;
+const btnFavorito = document.getElementById('btnFavorito');
+const addFavorito = () =>{
+  if(!btnFavorito.classList.contains('icon-disable')){
+    switchFavorito = !switchFavorito;
+    if(switchFavorito){
+      btnFavorito.querySelector('.icon-favorito').innerHTML = iconFavoritoOff;
+      user.addCuento(correoUser, document.querySelector('.info-title').innerHTML)
+      actualizarDatosUser();
+    }else{
+      btnFavorito.querySelector('.icon-favorito').innerHTML = iconFavoritoOn;
+      user.deleteCuento(correoUser, document.querySelector('.info-title').innerHTML);
+      actualizarDatosUser();
+    }
+  }
+}
+btnFavorito.addEventListener('click', addFavorito);
+
+const switchConfiguration = () =>{
+  if(!validacionPerfil()){
+    btnFavorito.classList.add('icon-disable');    
+  }else{
+    btnFavorito.classList.remove('icon-disable');    
+  }  
+}
+
 
 //cambio de posicion de la imagen en el perfil
 const imgPerfil = document.querySelector('.selector')
@@ -224,13 +365,14 @@ registerBtn.addEventListener('click',()=>{
 document.getElementById('btnBInicioS').addEventListener('click', () => {
   imgPerfil.style.transform = 'translate(0, 0)'
 })
-closePerfil.addEventListener('click',()=>{
+const closeWinPerfil = ()=>{
   noScroll = false;
   header.classList.remove('display-none');
   mainPage.classList.remove('display-none');
   perfilView.classList.add('display-none');
   overlay.classList.remove('overlay-active')
-})
+}
+closePerfil.addEventListener('click', closeWinPerfil)
 
 
 
@@ -243,22 +385,9 @@ btnSignUp.addEventListener('click', () =>{
 })
 
 document.querySelector('.btn-cancelar-register').addEventListener('click', () => {
-  console.log("dd")
   document.querySelector('.other-form-register').style.visibility = 'visible';
   document.querySelector('.register-box').style.visibility = 'hidden';
 })
-
-function validateForm() {
-  const form = document.getElementById('registerForm');
-  const password = form.password.value;
-  const confirmPassword = form.confirm_password.value;
-
-  if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden.");
-      return false;
-  }
-  return true;
-}
 //-----------------------------------------------------------------
 
 /*----------------------------------------------------------------------------------------- */
@@ -351,6 +480,7 @@ const closeCardInfo = () => {
 }
 const DetenerAudio = (audio) =>{
   audio.pause();
+  audio.currentTime = 0;
 }
 const ReproducirAudio = (audio) =>{
   audio.currentTime = 0;
@@ -373,18 +503,22 @@ function updateFocus(indexCuento) {
     tarjetaHistoria[indexCuento].classList.add('featured-card');
     currentCuento = indexCuento;
 }
-// Evento de teclado para detectar las flechas
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowRight') {
-    updateFocus(currentCuento+1);
-    openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
-    ReproducirAudio(audioDesc);
-  } else if (event.key === 'ArrowLeft') {
-    updateFocus(currentCuento-1);
-    openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
-    ReproducirAudio(audioDesc);
-  }
-});
+  if(currentSection == 1){
+    if (event.key === 'ArrowRight') {
+      updateFocus(currentCuento+1);
+      openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
+      ReproducirAudio(audioDesc);
+    } else if (event.key === 'ArrowLeft') {
+      updateFocus(currentCuento-1);
+      openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
+      ReproducirAudio(audioDesc);
+    }
+  }  
+})
+// Evento de teclado para detectar las flechas
+
+
 
 
 //-----------------------------------------------
@@ -416,7 +550,6 @@ const stopCuento = () =>{
 
 const btnCuentoCerrar = document.getElementById('btnCuentoCerrar');
 
-
 btnCuentoCerrar.addEventListener('click',()=>{
   if(cuentoTexto){
     stopCuento();
@@ -426,10 +559,3 @@ btnCuentoCerrar.addEventListener('click',()=>{
   }
 });
 
-
-
-// Opcional: Ocultar la sección al hacer clic en ella
-/*seccion.addEventListener('click', () => {
-  seccion.classList.remove('visible');
-  localStorage.setItem('seccionVisible', 'false'); // Actualizar el estado
-});*/

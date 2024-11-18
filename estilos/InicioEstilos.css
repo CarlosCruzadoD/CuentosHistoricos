@@ -412,3 +412,63 @@
 .mouse-img-down img{
     width: 100%;
 }
+
+.container-login {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    padding: 40px;
+}
+.login{
+    width: 100%;
+}
+.info-cuenta{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 80px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.info-cuenta h2{
+    text-align: center;
+    font-size: 3rem;
+}
+.cuenta-data{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.cuenta-data > div{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+.info-cuenta > div > span{
+    width: 50%;
+}
+.cuenta-data > div > span:first-child{
+    font-size: 1.41rem;
+    font-weight: 600;
+}
+.cuenta-data > div > span:last-child{
+    width: fit-content;
+    margin-left: 10px;
+    border-bottom: 1px solid black;
+}
+.info-cuenta button{
+    margin: 0 auto;
+    margin-top: 10px;
+    max-width: 400px;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform .5s;
+}
+.info-cuenta button:hover{
+    transform: scale(1.05);
+}

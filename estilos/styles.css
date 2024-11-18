@@ -196,12 +196,6 @@ box-shadow:  8px 8px 14px #b5b5b5,
 }
 /*----------------------------------------*/
 
-.register{
-    width: 50%;
-    height: 100%;
-    position: relative;
-    padding: 40px;
-}
 .register-box {
     position: absolute;
     top: 0;
@@ -390,9 +384,8 @@ box-shadow:  8px 8px 14px #b5b5b5,
     width: 100%;
 }
 .btn-perfil {
-    background-color: #4ABE52;    
-    
-    padding: 20px;
+    background-color: #4ABE52;        
+    padding: 20px 10px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -402,14 +395,11 @@ box-shadow:  8px 8px 14px #b5b5b5,
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
 }
 .btn-IniciarSesion{
     box-shadow: 12px 32px 30.5px 13px rgba(170, 242, 170, 0.39);
     color: white;
-}
-.btn-perfil svg{
-    margin-right:10px;
-    display: none;
 }
 .btn-transparent{
     background-color: transparent;
