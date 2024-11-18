@@ -24,8 +24,10 @@ body{
 .display-none{
     display: none;
 }
-
-
+.show-text{
+    padding: 40px;
+    overflow: scroll;
+}
 
 
 

@@ -1,6 +1,6 @@
 import * as user from './data/usuarios.js';
 
-
+let loginOpen = false;
 let cuentoInfo = false;
 let cuentoTexto = false;
 //-----------------------------------------------------------------------------
@@ -35,20 +35,7 @@ function scrollToSection(index) {
   }
 }
 let noScroll= false;
-document.addEventListener('wheel', (event) => {
-  if (isScrolling) return;
-  isScrolling = true;
-  setTimeout(() => { isScrolling = false; }, 600);
-  if(!noScroll){
-    if (event.deltaY > scrollThreshold) {
-      scrollToSection(currentSection + 1);
-      reproAudioGuia(currentSection);
-    } else if(currentSection != 0){
-      scrollToSection(currentSection - 1);
-      reproAudioGuia(currentSection);
-    }
-  }  
-});
+
 document.querySelector('.grid-container').addEventListener('mouseenter', ()=>{
   noScroll = true;
 })
@@ -290,6 +277,7 @@ const activarUser = () =>{
 //Funcion para abrir el pagina para el inicio de sesion
 const btnPerfilLogin = document.querySelectorAll('.btnPerfilLogin')
 btnPerfilLogin.forEach(boton =>{
+  loginOpen = !loginOpen
   boton.addEventListener('click', () => {
     let userLog = JSON.parse(localStorage.getItem('userLog')) || null;
     noScroll = true;
@@ -371,6 +359,7 @@ const switchConfiguration = () =>{
   let userLog = JSON.parse(localStorage.getItem('userLog'));
   if(!validacionPerfil()){
     btnFavorito.classList.add('icon-disable');    
+    btnSilencio.addEventListener('click', silenciarCuento);
   }else{
     //Estamos dentro de un perfil
     btnFavorito.classList.remove('icon-disable');  
@@ -393,8 +382,8 @@ const registerBtn = document.getElementById('btn-perfil-Registrar');
 registerBtn.addEventListener('click',()=>{
   imgPerfil.style.transform = 'translate(100%, 0)'
 })
-
-document.getElementById('btnBInicioS').addEventListener('click', () => {
+const btninicioS = document.getElementById('btnBInicioS');
+btninicioS.addEventListener('click', () => {
   imgPerfil.style.transform = 'translate(0, 0)'
 })
 const closeWinPerfil = ()=>{
@@ -480,8 +469,8 @@ btnContactenos.forEach(btn =>{
 })
 //--------------------------------------------------
 const btnMenu = document.querySelector('.btnMenu');
-
-btnMenu.addEventListener('click', ()=>{
+function openBtnMenu(){
+  scrollToSection(0);
   if(btnMenu.className.includes('btnMenuClose')){
     document.querySelector('.menu-options').classList.remove('menu-options-100');
     btnMenu.classList.remove('btnMenuClose');
@@ -489,7 +478,9 @@ btnMenu.addEventListener('click', ()=>{
     document.querySelector('.menu-options').classList.add('menu-options-100');
     btnMenu.classList.add('btnMenuClose');
   }  
-})
+}
+
+btnMenu.addEventListener('click', openBtnMenu)
 //----------------------------------------------------------------
 const audioDesc = document.querySelector('.audioDesc');
 const audioText = document.querySelector('.audioText');
@@ -499,7 +490,6 @@ const openCardInfo = (titulo) =>{
   document.querySelector('.grid-container').classList.add('grid-template-3');  
   cuentos.forEach((cuento)=>{    
     if(titulo == cuento.titulo){
-      console.log(cuento.titulo);
       document.querySelector('.info-title').innerHTML = cuento.titulo;
       document.querySelector('.info-autor').innerHTML = cuento.autor;
       document.querySelector('.img-cuento').src = cuento.imagen;
@@ -621,3 +611,60 @@ btnCuentoCerrar.addEventListener('click',()=>{
   }
 });
 
+if (window.innerWidth > 1024) {
+  console.log("Estás en una pantalla grande");
+  document.addEventListener('wheel', (event) => {
+    if (isScrolling) return;
+    isScrolling = true;
+    setTimeout(() => { isScrolling = false; }, 600);
+    if(!noScroll){
+      if (event.deltaY > scrollThreshold) {
+        scrollToSection(currentSection + 1);
+        console.log(currentSection)
+        reproAudioGuia(currentSection);
+      } else if(currentSection != 0){
+        scrollToSection(currentSection - 1);
+        console.log(currentSection)
+        reproAudioGuia(currentSection);
+      }
+    }  
+  });
+} else if (window.innerWidth > 768) {
+
+  console.log("Estás en una pantalla mediana");
+} else {
+  document.querySelector('body').style.overflow = 'auto'
+  btninicioS.addEventListener('click', ()=>{
+    document.querySelector('.login-user').style.display = 'block'
+    document.querySelector('.register').style.display = 'none'
+  })
+  registerBtn.addEventListener('click',()=>{
+    document.querySelector('.login-user').style.display = 'none'
+    document.querySelector('.register').style.display = 'block'
+  })
+  btnLeerCuento.addEventListener('click', ()=>{
+    document.querySelector('.imagen-info').style.display = 'none';
+    cuentos.forEach((cuento)=>{    
+      if(document.querySelector('.info-title').innerHTML  == cuento.titulo){
+        document.querySelector('.descri-info p').innerHTML = cuento.texto;
+        audioDesc.src = cuento.audioDesc;
+        audioText.src = cuento.audioTexto;
+      }
+    })
+    document.querySelector('.descri-info p').classList.add('show-text');
+  })
+  btnCuentoCerrar.addEventListener('click',()=>{
+    cuentos.forEach((cuento)=>{    
+      if(document.querySelector('.info-title').innerHTML  == cuento.titulo){
+        document.querySelector('.descri-info p').innerHTML = cuento.descripcion;
+      }
+    })
+    document.querySelector('.descri-info p').classList.remove('show-text');
+    document.querySelector('.imagen-info').style.display = 'block';
+    DetenerAudio(audioDesc); 
+    DetenerAudio(audioText); 
+  });
+  btnPerfilLogin.forEach(boton =>{
+    boton.addEventListener('click', openBtnMenu)
+  })
+}
