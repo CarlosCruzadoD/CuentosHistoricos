@@ -31,6 +31,7 @@ function scrollToSection(index) {
   if (index >= 0 && index < sections.length) {
     sections[index].scrollIntoView({ behavior: 'smooth' });
     currentSection = index;
+    reproAudioGuia(currentSection);
   }
 }
 let noScroll= false;
@@ -41,7 +42,7 @@ document.addEventListener('wheel', (event) => {
   if(!noScroll){
     if (event.deltaY > scrollThreshold) {
       scrollToSection(currentSection + 1);
-      reproAudioGuia();
+      reproAudioGuia(currentSection);
     } else if(currentSection != 0){
       scrollToSection(currentSection - 1);
       reproAudioGuia(currentSection);
@@ -68,11 +69,11 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       let key = false;
       tarjetaHistoria.forEach(card =>{
-          if(card.classList.contains("featured-card")){
-            key = true;
-          }
-        });
-        if(key)startCuento();   
+        if(card.classList.contains("featured-card")){
+          key = true;
+        }
+      });
+      if(key)startCuento();   
     }
     if (event.key === 'Escape') {
       if(cuentoTexto){
@@ -83,15 +84,25 @@ document.addEventListener('keydown', (event) => {
         reproAudioGuia(currentSection);
       }
     }
+    if (event.key === 'f') {      
+      if(cuentoTexto){
+        if(validacionPerfil()) addFavorito();
+      }     
+    }
+    if (event.key === 'j') {
+      if(cuentoTexto){
+        let userLog = JSON.parse(localStorage.getItem('userLog'))
+        if(userLog != 'auditiva') silenciarCuento();
+      }   
+      
+    }
   }
   if (event.key === 'ArrowDown') {
     console.log(currentSection);
     scrollToSection(currentSection + 1);
-    reproAudioGuia(currentSection);
   } else if (event.key === 'ArrowUp') {
     console.log(currentSection);
-    scrollToSection(currentSection - 1);
-    reproAudioGuia(currentSection);
+    scrollToSection(currentSection - 1);    
   }
 });
 //----------------------------------------------------------------------
@@ -112,7 +123,7 @@ document.addEventListener('keydown', (event) => {
     ReproducirAudio(audioGuia);
   }
   document.addEventListener('DOMContentLoaded', ()=>{
-    //reproAudioGuia(currentCuento);
+    ReproducirAudio(document.querySelector('.audio-guia'));
     activarUser();
     switchConfiguration();
   })
@@ -176,6 +187,7 @@ btnSecHeader.forEach((boton)=>{
     for(let i = 0; i < sections.length ; i++){
       if(sections[i].id == boton.innerHTML){
         sections[i].scrollIntoView({ behavior: 'smooth' });
+        reproAudioGuia(i);
       }  
     }
   })
@@ -234,10 +246,12 @@ document.getElementById('btn-submit-registrar').addEventListener('click', () => 
     }
   }  
 });
-const correoUser = localStorage.getItem('correoUser');
+
 function actualizarDatosUser(){
+  const correoUser = localStorage.getItem('correoUser');
   localStorage.setItem('userLog',JSON.stringify(user.buscarUsuario(correoUser)));
 }
+//CONFIGURACION DEL INICIO DE SESION
 document.getElementById('btn-submit-login').addEventListener('click', () => {
   console.log(perfil);
   header.classList.add('display-none');
@@ -248,6 +262,7 @@ document.getElementById('btn-submit-login').addEventListener('click', () => {
   const contra = document.getElementById("password").value;
   if(user.validarCorreo(correo)){
     if(user.autenticarUsuario(correo, contra)){
+      console.log('inicio')
       localStorage.setItem('correoUser', correo);
       closeWinPerfil();
       actualizarDatosUser();
@@ -258,49 +273,55 @@ document.getElementById('btn-submit-login').addEventListener('click', () => {
 });
 //************************************************ */
 document.getElementById('btnNextPage').addEventListener('click', () => {
+  console.log(JSON.parse(localStorage.getItem('usuarios')));
   console.log(JSON.parse(localStorage.getItem('userLog')));
 })
 //************************************************ */
 const activarUser = () =>{
   let userLog = JSON.parse(localStorage.getItem('userLog')) || null;
   if(userLog !=null){
-    document.querySelector('#btn-perfil-Login svg').classList.remove('display-none');
-    document.querySelector('#btn-perfil-Login span').innerText = 'nombre';
+    document.querySelector('.btnPerfilLogin svg').classList.remove('display-none');
+    document.querySelector('.btnPerfilLogin span').innerText = userLog.nombre;
   }else{
-    document.querySelector('#btn-perfil-Login svg').classList.add('display-none');
-    document.querySelector('#btn-perfil-Login span').innerText = 'Perfil';
+    document.querySelector('.btnPerfilLogin svg').classList.add('display-none');
+    document.querySelector('.btnPerfilLogin span').innerText = 'Perfil';
   }
 }
-//Funcion para abrir el inicio de sesion
-document.getElementById('btn-perfil-Login').addEventListener('click', () => {
-  let userLog = JSON.parse(localStorage.getItem('userLog')) || null;
-  noScroll = true;
-  header.classList.add('display-none');
-  mainPage.classList.add('display-none');
-  perfilView.classList.remove('display-none');
-  overlay.classList.add('overlay-active');
-  scrollToSection(0);
-  if(userLog !=null){
-    document.querySelector('.login').classList.add('display-none');
-    document.querySelector('.info-cuenta').classList.remove('display-none');
-    document.querySelector('.campo-nombre .data').innerText = userLog.nombre;
-    document.querySelector('.campo-apellido .data').innerText = userLog.apellidos;
-    document.querySelector('.campo-correo .data').innerText = userLog.correo;
-    document.querySelector('.campo-pais .data').innerText = userLog.pais;
-    document.querySelector('.campo-edad .data').innerText = userLog.edad;
-    document.querySelector('.campo-discapacidad .data').innerText = userLog.discapacidad;
-  }else{
-    document.querySelector('.login').classList.remove('display-none');
-    document.querySelector('.info-cuenta').classList.add('display-none');
-  }  
-});
+//Funcion para abrir el pagina para el inicio de sesion
+const btnPerfilLogin = document.querySelectorAll('.btnPerfilLogin')
+btnPerfilLogin.forEach(boton =>{
+  boton.addEventListener('click', () => {
+    let userLog = JSON.parse(localStorage.getItem('userLog')) || null;
+    noScroll = true;
+    header.classList.add('display-none');
+    mainPage.classList.add('display-none');
+    perfilView.classList.remove('display-none');
+    overlay.classList.add('overlay-active');
+    scrollToSection(0);
+    if(userLog !=null){
+      document.querySelector('.login').classList.add('display-none');
+      document.querySelector('.info-cuenta').classList.remove('display-none');
+      document.querySelector('.campo-nombre .data').innerText = userLog.nombre;
+      document.querySelector('.campo-apellido .data').innerText = userLog.apellidos;
+      document.querySelector('.campo-correo .data').innerText = userLog.correo;
+      document.querySelector('.campo-pais .data').innerText = userLog.pais;
+      document.querySelector('.campo-edad .data').innerText = userLog.edad;
+      document.querySelector('.campo-discapacidad .data').innerText = userLog.discapacidad;
+    }else{
+      document.querySelector('.login').classList.remove('display-none');
+      document.querySelector('.info-cuenta').classList.add('display-none');
+    }  
+  })
+})
 
 //Funcion para cerrar Sesion
 document.getElementById('btnCloseSesion').addEventListener('click', ()=>{
+  console.log(JSON.parse(localStorage.getItem('userLog')));
   localStorage.removeItem('userLog');
   closeWinPerfil();
   activarUser();
   switchConfiguration();
+  console.log(JSON.parse(localStorage.getItem('userLog')));
 })
 //Validar Si estamos en un perfil
 const validacionPerfil = () => {
@@ -325,12 +346,12 @@ const silenciarCuento = () => {
     ReproducirAudio(audioText);
   }
 }
-btnSilencio.addEventListener('click', silenciarCuento);
 const iconFavoritoOn = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"></path></svg> '
 const iconFavoritoOff = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 10.132v-6c0-1.103-.897-2-2-2H7c-1.103 0-2 .897-2 2V22l7-4.666L19 22V10.132z"></path></svg>'
 let switchFavorito = false;
 const btnFavorito = document.getElementById('btnFavorito');
 const addFavorito = () =>{
+  const correoUser = localStorage.getItem('correoUser');
   if(!btnFavorito.classList.contains('icon-disable')){
     switchFavorito = !switchFavorito;
     if(switchFavorito){
@@ -344,13 +365,24 @@ const addFavorito = () =>{
     }
   }
 }
-btnFavorito.addEventListener('click', addFavorito);
+
 
 const switchConfiguration = () =>{
+  let userLog = JSON.parse(localStorage.getItem('userLog'));
   if(!validacionPerfil()){
     btnFavorito.classList.add('icon-disable');    
   }else{
-    btnFavorito.classList.remove('icon-disable');    
+    //Estamos dentro de un perfil
+    btnFavorito.classList.remove('icon-disable');  
+    btnFavorito.addEventListener('click', addFavorito);  
+    if(userLog.discapacidad == 'auditiva'){
+      btnSilencio.classList.add('icon-disable')
+    }else if(userLog.discapacidad == 'visual'){
+      btnSilencio.classList.remove('icon-disable')
+      btnSilencio.addEventListener('click', silenciarCuento);
+    }else{
+      btnSilencio.addEventListener('click', silenciarCuento);
+    }
   }  
 }
 
@@ -372,9 +404,7 @@ const closeWinPerfil = ()=>{
   perfilView.classList.add('display-none');
   overlay.classList.remove('overlay-active')
 }
-closePerfil.addEventListener('click', closeWinPerfil)
-
-
+closePerfil.addEventListener('click', closeWinPerfil);
 
 let btnSignUp=document.getElementById('btn-signups');
 
@@ -391,12 +421,20 @@ document.querySelector('.btn-cancelar-register').addEventListener('click', () =>
 //-----------------------------------------------------------------
 
 /*----------------------------------------------------------------------------------------- */
+const resetClasses = () => { 
+  document.querySelector('.top-left').classList.remove('expand'); 
+  document.querySelector('.top-right').classList.remove('expand'); 
+  document.querySelector('.bottom-left').classList.remove('expand'); 
+  document.querySelector('.bottom-right').classList.remove('expand');
+  document.querySelector('.center-square').classList.remove('expand');
+}
 const swicthNombre = (nombre)=>{
   switch (nombre) {
     case 'José Luis Cerff Aguilar':
       if(document.querySelector('.top-left').classList.value.includes('expand')){
         document.querySelector('.top-left').classList.remove('expand');
       }else{
+        resetClasses();
         document.querySelector('.top-left').classList.add('expand');
       }        
       break;  
@@ -404,6 +442,7 @@ const swicthNombre = (nombre)=>{
       if(document.querySelector('.top-right').classList.value.includes('expand')){
         document.querySelector('.top-right').classList.remove('expand');
       }else{
+        resetClasses();
         document.querySelector('.top-right').classList.add('expand');
       }        
       break;  
@@ -411,6 +450,7 @@ const swicthNombre = (nombre)=>{
       if(document.querySelector('.bottom-left').classList.value.includes('expand')){
         document.querySelector('.bottom-left').classList.remove('expand');
       }else{
+        resetClasses();
         document.querySelector('.bottom-left').classList.add('expand');
       }        
       break;  
@@ -418,6 +458,7 @@ const swicthNombre = (nombre)=>{
       if(document.querySelector('.bottom-right').classList.value.includes('expand')){
         document.querySelector('.bottom-right').classList.remove('expand');
       }else{
+        resetClasses();
         document.querySelector('.bottom-right').classList.add('expand');
       }        
       break;  
@@ -425,6 +466,7 @@ const swicthNombre = (nombre)=>{
       if(document.querySelector('.center-square').classList.value.includes('expand')){
         document.querySelector('.center-square').classList.remove('expand');
       }else{
+        resetClasses();
         document.querySelector('.center-square').classList.add('expand');
       }        
       break;  
@@ -479,12 +521,26 @@ const closeCardInfo = () => {
   DetenerAudio(audioText); 
 }
 const DetenerAudio = (audio) =>{
-  audio.pause();
+  const userLog = JSON.parse(localStorage.getItem('userLog'));
   audio.currentTime = 0;
+  if(userLog != null){
+    if(userLog.discapacidad != 'auditiva'){
+      audio.pause();
+    }
+  }else{
+    audio.pause();
+  } 
 }
 const ReproducirAudio = (audio) =>{
+  const userLog = JSON.parse(localStorage.getItem('userLog'));
   audio.currentTime = 0;
-  audio.play();
+  if(userLog != null){
+    if(userLog.discapacidad != 'auditiva'){
+      audio.play();
+    }
+  }else{
+    audio.play();
+  }
 }
 const tarjetaHistoria = document.querySelectorAll('.card');
 tarjetaHistoria.forEach(card =>{
@@ -516,16 +572,13 @@ document.addEventListener('keydown', (event) => {
     }
   }  
 })
-// Evento de teclado para detectar las flechas
-
-
 
 
 //-----------------------------------------------
 const btnLeerCuento = document.getElementById('btnLeerCuento');
 
-
 const startCuento = ()=>{
+  
   document.querySelector('.muestra-historias').classList.add('oculto');  
   document.querySelector('.options') .classList.add('display-none');
   textoCuento.classList.add('active');  
@@ -534,8 +587,17 @@ const startCuento = ()=>{
   DetenerAudio(audioDesc);
   ReproducirAudio(audioText);
   cuentoTexto = true;
+  if(validacionPerfil()){
+    let cuentoUser = JSON.parse(localStorage.getItem('userLog')).cuentos;
+    btnFavorito.querySelector('.icon-favorito').innerHTML = iconFavoritoOn;
+    cuentoUser.forEach(cuento => {    
+      if(document.querySelector('.info-title').innerHTML == cuento){
+        switchFavorito = !switchFavorito;
+        btnFavorito.querySelector('.icon-favorito').innerHTML = iconFavoritoOff;
+      }
+    })  
+  } 
 }
-
 btnLeerCuento.addEventListener('click',startCuento);
 
 const stopCuento = () =>{

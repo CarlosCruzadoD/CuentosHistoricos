@@ -98,6 +98,61 @@ body{
     .info-card{
         padding: 5px;
     }
+    .selector, .login-user{
+        display: none;
+    }
+    .login-user{
+        width: 100%;
+    }
+    .info-cuenta{
+        padding: 20px;
+    }
+    .login-user .info-cuenta h2{
+        font-size: clamp(1.3rem, 5vw, 3rem);
+    }
+    .cuenta-data span{
+        font-size: clamp(1rem, 4vw, 1.5rem)!important;
+    }
+    .container-login{
+        width: 100%;
+        padding: 0;
+    }
+    .login{
+        padding: 20px;
+    }
+    .login-formulario p, .login-formulario button, .login-formulario span{
+        font-size: clamp(1rem, 3vw, 2rem);
+    }
+    .login-formulario h2{
+        font-size: clamp(1.2rem, 6vw, 2rem);
+    }
+    .login-formulario h3{
+        margin: 0;
+        font-size: clamp(1.1rem, 4vw, 2rem);
+    }
+    .forgot-password{
+        margin: 10px;
+    }
+    .info-login button{
+        padding: 10px;
+    }
+    .info-login input{
+        padding: 10px;
+        font-size: clamp(.9rem, 4vw, 1.1rem);
+    }
+    .other-login, .text{
+        padding: 0;
+    }
+    .btnIcon{
+        margin: 10px 0;
+        padding: 0px;
+    }
+    .btnIcon img{
+        max-width: 30px;
+    }    
+    .register span, .register p, .register button{
+        font-size: clamp(1rem, 4vw, 1.4rem);
+    }
 }
 
 

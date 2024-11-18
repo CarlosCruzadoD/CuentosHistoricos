@@ -64,9 +64,9 @@ function deleteCuento(correo, cuento){
   const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];  
   usuarios.forEach(user => {
     if(user.correo== correo){
-      for (let i = 0; i < array.length; i++) {
+      for (let i = 0; i < usuarios.length; i++) {
         if(user.cuentos[i] == cuento){
-          user.cuentos.splice(i+1,1);
+          user.cuentos.splice(i,1);
         }
       }
     }
