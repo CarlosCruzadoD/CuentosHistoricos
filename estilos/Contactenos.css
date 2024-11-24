@@ -3,15 +3,17 @@
 }
 
 .contactenos-container{
-    width: 100%;
-    height: 80vh;
     display: flex;
-    padding: 30px 40px;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
     align-items: center;
+    height: fit-content;
+    width: 100%;
+    padding: 30px 40px;
+    
 }
 
 .fotos, .contacto {
-    margin: 0 30px;
     text-align: center;
     width: 100%;
     display: flex;
@@ -126,14 +128,13 @@
 
 /* Seccion imagenes de contactos */
 .contactenos-container div .icon div:nth-child(1){
-    /* background-image: url(./img-contáctenos/Foto_Mauro.jpg); */
+    background-image: url(../img-contáctenos/JoseCerff.jpeg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 .contactenos-container div .icon div:nth-child(2){
-    /* background-image: url(./img-contáctenos/Foto_Mauro.jpg); */
-    background-position: center;
+     background-image: url(../img-contáctenos/David.jpg); 
     background-repeat: no-repeat;
     background-size: cover;
 }

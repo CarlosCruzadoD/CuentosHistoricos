@@ -3,6 +3,21 @@ import * as user from './data/usuarios.js';
 let loginOpen = false;
 let cuentoInfo = false;
 let cuentoTexto = false;
+function reproAudioResp(texto){
+  responsiveVoice.speak(texto, "Spanish Latin American Female");
+}
+function offAudioResp(){
+  responsiveVoice.cancel();
+}
+
+function cardCuentos(titulo, src){
+  return "<div class='card' tabindex='0'> <div class='image-container'> <img src='"+src+"' alt='Título'> </div> <div class='card-title'>" + 
+  titulo +"</div></div>"
+}
+const gridContainer = document.querySelector('.grid-container');
+
+
+
 //-----------------------------------------------------------------------------
 //Obtener Todos los cuentos
 let cuentos = [];
@@ -20,6 +35,7 @@ fetch('./data/cuentos.json')
   .catch(error => {
     console.error('Hubo un problema con la solicitud fetch:', error);
   });
+
 //-----------------------------------------------------------------------------
 //Funcion para dezlisar al hacer scroll o presionar las tecla
 let currentSection = 0;
@@ -28,12 +44,21 @@ const scrollThreshold =10;
 let isScrolling = false; 
 
 function scrollToSection(index) {
-  if (index >= 0 && index < sections.length) {
-    sections[index].scrollIntoView({ behavior: 'smooth' });
-    currentSection = index;
-    reproAudioGuia(currentSection);
+  if(!noScroll){
+    if (index >= 0 && index < sections.length) {
+      sections[index].scrollIntoView({ behavior: 'smooth' });
+      currentSection = index;
+      reproAudioGuia(currentSection);
+      if(currentSection == 1){
+        cuentos.forEach((titulos) => {
+          console.log("Hola: " + titulo);
+          gridContainer.innerHTML += cardCuentos(titulos.titulo, titulos.imagen);
+        })
+      }
+    }
   }
 }
+  
 let noScroll= false;
 
 document.querySelector('.grid-container').addEventListener('mouseenter', ()=>{
@@ -94,27 +119,27 @@ document.addEventListener('keydown', (event) => {
 });
 //----------------------------------------------------------------------
 //Configuracion de audio guia
-  const audioGuia = document.querySelector('.audio-guia');
   const reproAudioGuia = (seccion) => {
     switch(seccion){
       case 0:
-        audioGuia.src = './cuentos/Sections/Audio-Bienvenida.mp3';
+        reproAudioResp("Bienvenidos a Cuentos Magicos");
         break;
       case 1:
-        audioGuia.src = './cuentos/Sections/Audio-Historias.mp3';
+        reproAudioResp("Explora nuestros cuentos");
         break;
       case 2:
-        audioGuia.src = './cuentos/Sections/Audio-Contactenos.mp3';
+        reproAudioResp("Ponte en contacto con nosotros");
         break;
     }
-    ReproducirAudio(audioGuia);
   }
   document.addEventListener('DOMContentLoaded', ()=>{
-    ReproducirAudio(document.querySelector('.audio-guia'));
+    console.log("hola: "+cuentos);
+    reproAudioResp("Bienvenidos a Cuentos Magicos");
     activarUser();
     switchConfiguration();
+    
   })
-
+  
 //----------------------------------------------------------------------
 //Funcion para Login
 let perfil = false;
@@ -179,7 +204,6 @@ btnSecHeader.forEach((boton)=>{
     }
   })
 })
-
 //---------------------------------------------------------
 //Boton Perfil
 let mainPage = document.querySelector('.main-page');
@@ -195,7 +219,7 @@ if (localStorage.getItem('seccionVisible') === 'true') {
   perfilView.classList.remove('display-none');
 }
 
-document.getElementById('btn-submit-registrar').addEventListener('click', () => {
+document.getElementById('btn-submit-registrar').addEventListener('click', () => {  
   header.classList.add('display-none');
   mainPage.classList.add('display-none');
   perfilView.classList.remove('display-none');
@@ -229,9 +253,19 @@ document.getElementById('btn-submit-registrar').addEventListener('click', () => 
           cuentos: []
         };
         user.registrarUser(registerData);
+        otherRegisterClose();
+        imgPerfil.style.transform = 'translate(0, 0)';
+        document.getElementById("register-nombre").value = "";
+        document.getElementById("register-apellidos").value = "";
+        document.getElementById("register-email").value = "";
+        document.getElementById("register-password").value = "";
+        document.getElementById("register-confirm-password").value = "";
+        document.getElementById("register-pais").value = "";
+        document.getElementById("register-edad").value = "";
+        document.getElementById("register-discapacidad").value = "Ninguna";
       }
     }
-  }  
+  }
 });
 
 function actualizarDatosUser(){
@@ -262,6 +296,7 @@ document.getElementById('btn-submit-login').addEventListener('click', () => {
 document.getElementById('btnNextPage').addEventListener('click', () => {
   console.log(JSON.parse(localStorage.getItem('usuarios')));
   console.log(JSON.parse(localStorage.getItem('userLog')));
+  responsiveVoice.speak("Cuentos para todos", "Spanish Latin American Female");
 })
 //************************************************ */
 const activarUser = () =>{
@@ -328,10 +363,10 @@ const silenciarCuento = () => {
   switchSilencio = !switchSilencio;
   if(switchSilencio){
     btnSilencio.querySelector('.icon-silencio').innerHTML = iconSilencioOff;
-    DetenerAudio(audioText);
+    responsiveVoice.cancel();
   }else{
     btnSilencio.querySelector('.icon-silencio').innerHTML = iconSilencioOn;
-    ReproducirAudio(audioText);
+    responsiveVoice.speak(cuentoFijo.texto, "Spanish Latin American Female");
   }
 }
 const iconFavoritoOn = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 2H6c-1.103 0-2 .897-2 2v18l8-4.572L20 22V4c0-1.103-.897-2-2-2zm0 16.553-6-3.428-6 3.428V4h12v14.553z"></path></svg> '
@@ -358,6 +393,7 @@ const addFavorito = () =>{
 const switchConfiguration = () =>{
   let userLog = JSON.parse(localStorage.getItem('userLog'));
   if(!validacionPerfil()){
+    //No esta logeado
     btnFavorito.classList.add('icon-disable');    
     btnSilencio.addEventListener('click', silenciarCuento);
   }else{
@@ -391,22 +427,24 @@ const closeWinPerfil = ()=>{
   header.classList.remove('display-none');
   mainPage.classList.remove('display-none');
   perfilView.classList.add('display-none');
-  overlay.classList.remove('overlay-active')
+  overlay.classList.remove('overlay-active');
+  otherRegisterClose();
+  imgPerfil.style.transform = 'translate(0, 0)';
 }
 closePerfil.addEventListener('click', closeWinPerfil);
 
-let btnSignUp=document.getElementById('btn-signups');
-
-btnSignUp.addEventListener('click', () =>{
+function otherRegisterOpen(){
   document.querySelector('.other-form-register').style.visibility = 'hidden';
   document.querySelector('.register-box').style.visibility = 'visible';
+}
+let btnSignUp=document.getElementById('btn-signups');
+btnSignUp.addEventListener('click', otherRegisterOpen);
 
-})
-
-document.querySelector('.btn-cancelar-register').addEventListener('click', () => {
+function otherRegisterClose(){
   document.querySelector('.other-form-register').style.visibility = 'visible';
   document.querySelector('.register-box').style.visibility = 'hidden';
-})
+}
+document.querySelector('.btn-cancelar-register').addEventListener('click', otherRegisterClose);
 //-----------------------------------------------------------------
 
 /*----------------------------------------------------------------------------------------- */
@@ -482,14 +520,22 @@ function openBtnMenu(){
 
 btnMenu.addEventListener('click', openBtnMenu)
 //----------------------------------------------------------------
-const audioDesc = document.querySelector('.audioDesc');
-const audioText = document.querySelector('.audioText');
 const textoCuento = document.querySelector('.texto');
+let cuentoFijo;
+let textoDesc;
 const openCardInfo = (titulo) =>{
   document.querySelector('.card-container').classList.remove('display-none');
   document.querySelector('.grid-container').classList.add('grid-template-3');  
   cuentos.forEach((cuento)=>{    
     if(titulo == cuento.titulo){
+      cuentoFijo = {
+        titulo:cuento.titulo,
+        autor: cuento.autor,
+        imagen: cuento.imagen,
+        descripcion: cuento.descripcion,
+        texto: cuento.texto
+      }
+      textoDesc = cuentoFijo.titulo + " de:" + cuentoFijo.autor + "trata de: " + cuentoFijo.descripcion;
       document.querySelector('.info-title').innerHTML = cuento.titulo;
       document.querySelector('.info-autor').innerHTML = cuento.autor;
       document.querySelector('.img-cuento').src = cuento.imagen;
@@ -507,30 +553,7 @@ const closeCardInfo = () => {
   tarjetaHistoria.forEach(card =>{
     card.classList.remove('featured-card');      
   });
-  DetenerAudio(audioDesc); 
-  DetenerAudio(audioText); 
-}
-const DetenerAudio = (audio) =>{
-  const userLog = JSON.parse(localStorage.getItem('userLog'));
-  audio.currentTime = 0;
-  if(userLog != null){
-    if(userLog.discapacidad != 'auditiva'){
-      audio.pause();
-    }
-  }else{
-    audio.pause();
-  } 
-}
-const ReproducirAudio = (audio) =>{
-  const userLog = JSON.parse(localStorage.getItem('userLog'));
-  audio.currentTime = 0;
-  if(userLog != null){
-    if(userLog.discapacidad != 'auditiva'){
-      audio.play();
-    }
-  }else{
-    audio.play();
-  }
+  offAudioResp();
 }
 const tarjetaHistoria = document.querySelectorAll('.card');
 tarjetaHistoria.forEach(card =>{
@@ -539,8 +562,9 @@ tarjetaHistoria.forEach(card =>{
     tarjetaHistoria.forEach(card =>{
       card.classList.remove('featured-card');      
     })
-    card.classList.add('featured-card');
-    ReproducirAudio(audioDesc);
+    card.classList.add('featured-card');    
+    reproAudioResp(textoDesc);
+    //ReproducirAudio(audioDesc);
   });
 })
 let currentCuento = -1  ;
@@ -554,11 +578,11 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowRight') {
       updateFocus(currentCuento+1);
       openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
-      ReproducirAudio(audioDesc);
+      reproAudioResp(textoDesc);
     } else if (event.key === 'ArrowLeft') {
       updateFocus(currentCuento-1);
       openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
-      ReproducirAudio(audioDesc);
+      reproAudioResp(textoDesc);
     }
   }  
 })
@@ -567,15 +591,14 @@ document.addEventListener('keydown', (event) => {
 //-----------------------------------------------
 const btnLeerCuento = document.getElementById('btnLeerCuento');
 
-const startCuento = ()=>{
-  
+const startCuento = ()=>{  
   document.querySelector('.muestra-historias').classList.add('oculto');  
   document.querySelector('.options') .classList.add('display-none');
   textoCuento.classList.add('active');  
   document.querySelector('.btnCuentoCerrado').classList.add('display-none');
   document.querySelector('.btnCuentoAbierto').classList.remove('display-none');
-  DetenerAudio(audioDesc);
-  ReproducirAudio(audioText);
+  offAudioResp();
+  reproAudioResp(cuentoFijo.texto);
   cuentoTexto = true;
   if(validacionPerfil()){
     let cuentoUser = JSON.parse(localStorage.getItem('userLog')).cuentos;
@@ -596,8 +619,7 @@ const stopCuento = () =>{
   textoCuento.classList.remove('active');  
   document.querySelector('.btnCuentoCerrado').classList.remove('display-none');
   document.querySelector('.btnCuentoAbierto').classList.add('display-none');
-  DetenerAudio(audioDesc); 
-  DetenerAudio(audioText); 
+  offAudioResp();
 }
 
 const btnCuentoCerrar = document.getElementById('btnCuentoCerrar');
@@ -612,6 +634,7 @@ btnCuentoCerrar.addEventListener('click',()=>{
 });
 
 if (window.innerWidth > 1024) {
+  document.getElementById('header').classList.remove('display-none')
   console.log("Estás en una pantalla grande");
   document.addEventListener('wheel', (event) => {
     if (isScrolling) return;
@@ -630,7 +653,6 @@ if (window.innerWidth > 1024) {
     }  
   });
 } else if (window.innerWidth > 768) {
-
   console.log("Estás en una pantalla mediana");
 } else {
   document.querySelector('body').style.overflow = 'auto'
@@ -661,8 +683,7 @@ if (window.innerWidth > 1024) {
     })
     document.querySelector('.descri-info p').classList.remove('show-text');
     document.querySelector('.imagen-info').style.display = 'block';
-    DetenerAudio(audioDesc); 
-    DetenerAudio(audioText); 
+    offAudioResp();
   });
   btnPerfilLogin.forEach(boton =>{
     boton.addEventListener('click', openBtnMenu)
