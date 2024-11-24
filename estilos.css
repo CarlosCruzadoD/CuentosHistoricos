@@ -4,11 +4,46 @@
 @import url(estilos/Historias.css);
 @import url(estilos/Footer.css);
 @import url(estilos/Perfil.css);
+@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Anton|Roboto');
 *{
     margin: 0;
     box-sizing: border-box;
 }
 
+
+
+.historias-destacadas h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #4a90e2;
+}
+
+.btn-register{
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #388E3C ;    
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    margin: 0 20px;
+}
+
+.nav-menu a:hover {
+    text-decoration: underline;
+}
 body{
     overflow: hidden;
     scroll-behavior: smooth; /* Desplazamiento suave */

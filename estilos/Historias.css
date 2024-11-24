@@ -1,7 +1,31 @@
-
+.btn-hitorias-guardadas{
+    background-color: #4CAF50;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 20px;
+    color: #f5f5f5;
+    font-size: 1rem;
+}
+.btn-hitorias-guardadas:hover{
+    background-color: #419744;
+    transform: scale(1.1);
+}
+.btn-hitorias-disable{
+    background-color: transparent;
+    border: 1px solid #9f9f9f ;
+    padding: 15px 20px;
+    border-radius: 20px;
+    color: #9f9f9f;
+    font-size: 1rem;
+    cursor: not-allowed;
+}
+.btn-hitorias-disable:hover{
+    background-color: transparent;
+    transform: scale(1);
+}
 .options{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 .options span{
     font-size: 1.2rem;

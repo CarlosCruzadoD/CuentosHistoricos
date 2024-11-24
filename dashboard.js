@@ -1,16 +1,30 @@
 // Datos de lecturas por historia
 const historias = ["Un Cuento de Navidad", "La Ranita Presumida", "Hansel y Gretel", "El Pulgarsito", "Pinocho", "El Mago de Oz", "Bambi","Gato con botas", "Caperucita roja", "Cenicienta"];
-const lecturas = [15, 40, 20, 30, 25, 50, 20, 45, 10, 5]; // Ejemplo de datos de lecturas
-
-// Configuración del gráfico
+let lecturaCuento = [];
+let historiaCuento = [];
+fetch('./data/cuentos.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // Convierte la respuesta a un objeto JSON
+  })
+  .then(data => {
+    cuentos = data.cuentos;
+    cuentos.forEach((titulos) => {
+        lecturaCuento.push(localStorage.getItem(titulos.titulo));
+        historiaCuento.push(titulos.titulo)
+        console.log(lecturaCuento)
+    })
+    // Configuración del gráfico
 const ctx = document.getElementById('readingChart').getContext('2d');
 const readingChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: historias,
+        labels: historiaCuento,
         datasets: [{
             label: 'Número de Lecturas',
-            data: lecturas,
+            data: lecturaCuento,
             backgroundColor: [
                 'rgba(75, 192, 192, 0.6)',
                 'rgba(54, 162, 235, 0.6)',
@@ -37,3 +51,11 @@ const readingChart = new Chart(ctx, {
         }
     }
 });
+  })
+  .catch(error => {
+    console.error('Hubo un problema con la solicitud fetch:', error);
+  });
+  
+const lecturas = [15, 40, 20, 30, 25, 50, 20, 45, 10, 5]; // Ejemplo de datos de lecturas
+
+

@@ -1,11 +1,19 @@
 import * as user from './data/usuarios.js';
+import * as funcU from './funciones.js';
 
 let loginOpen = false;
-let cuentoInfo = false;
 let cuentoTexto = false;
 function reproAudioResp(texto){
-  responsiveVoice.speak(texto, "Spanish Latin American Female");
-}
+  let userLog = JSON.parse(localStorage.getItem('userLog'));
+  if(validacionPerfil()){
+  if(userLog.discapacidad != 'auditiva'){
+      responsiveVoice.speak(texto, "Spanish Latin American Female");
+    }
+  }else{
+    responsiveVoice.speak(texto, "Spanish Latin American Female");
+  }
+} 
+  
 function offAudioResp(){
   responsiveVoice.cancel();
 }
@@ -31,6 +39,21 @@ fetch('./data/cuentos.json')
   })
   .then(data => {
     cuentos = data.cuentos;
+    cuentos.forEach((titulos) => {
+      localStorage.setItem(titulos.titulo, 0);
+      gridContainer.innerHTML += cardCuentos(titulos.titulo, titulos.imagen);
+    })
+    document.querySelectorAll('.card').forEach(card =>{
+      card.addEventListener('click', ()=>{    
+        openCardInfo(card.querySelector('.card-title').innerHTML);    
+        document.querySelectorAll('.card').forEach(card =>{
+          card.classList.remove('featured-card');      
+        })
+        card.classList.add('featured-card');    
+        reproAudioResp(textoDesc);
+      });
+    })
+    
   })
   .catch(error => {
     console.error('Hubo un problema con la solicitud fetch:', error);
@@ -49,12 +72,6 @@ function scrollToSection(index) {
       sections[index].scrollIntoView({ behavior: 'smooth' });
       currentSection = index;
       reproAudioGuia(currentSection);
-      if(currentSection == 1){
-        cuentos.forEach((titulos) => {
-          console.log("Hola: " + titulo);
-          gridContainer.innerHTML += cardCuentos(titulos.titulo, titulos.imagen);
-        })
-      }
     }
   }
 }
@@ -80,7 +97,7 @@ document.addEventListener('keydown', (event) => {
   if(currentSection==1){
     if (event.key === 'Enter') {
       let key = false;
-      tarjetaHistoria.forEach(card =>{
+      document.querySelectorAll('.card').forEach(card =>{
         if(card.classList.contains("featured-card")){
           key = true;
         }
@@ -100,6 +117,9 @@ document.addEventListener('keydown', (event) => {
       if(cuentoTexto){
         if(validacionPerfil()) addFavorito();
       }     
+    }
+    if (event.key === 'h') {      
+      if(validacionPerfil()) btnHistGuardFunc();    
     }
     if (event.key === 'j') {
       if(cuentoTexto){
@@ -133,11 +153,10 @@ document.addEventListener('keydown', (event) => {
     }
   }
   document.addEventListener('DOMContentLoaded', ()=>{
-    console.log("hola: "+cuentos);
     reproAudioResp("Bienvenidos a Cuentos Magicos");
     activarUser();
     switchConfiguration();
-    
+    scrollToSection(0);
   })
   
 //----------------------------------------------------------------------
@@ -294,9 +313,10 @@ document.getElementById('btn-submit-login').addEventListener('click', () => {
 });
 //************************************************ */
 document.getElementById('btnNextPage').addEventListener('click', () => {
-  console.log(JSON.parse(localStorage.getItem('usuarios')));
-  console.log(JSON.parse(localStorage.getItem('userLog')));
-  responsiveVoice.speak("Cuentos para todos", "Spanish Latin American Female");
+  /*console.log(JSON.parse(localStorage.getItem('usuarios')));
+  console.log(JSON.parse(localStorage.getItem('userLog')));*/
+  console.log(localStorage.getItem('Bambi'));
+  
 })
 //************************************************ */
 const activarUser = () =>{
@@ -314,13 +334,14 @@ const btnPerfilLogin = document.querySelectorAll('.btnPerfilLogin')
 btnPerfilLogin.forEach(boton =>{
   loginOpen = !loginOpen
   boton.addEventListener('click', () => {
+    scrollToSection(0);
     let userLog = JSON.parse(localStorage.getItem('userLog')) || null;
     noScroll = true;
     header.classList.add('display-none');
     mainPage.classList.add('display-none');
     perfilView.classList.remove('display-none');
     overlay.classList.add('overlay-active');
-    scrollToSection(0);
+    
     if(userLog !=null){
       document.querySelector('.login').classList.add('display-none');
       document.querySelector('.info-cuenta').classList.remove('display-none');
@@ -396,10 +417,14 @@ const switchConfiguration = () =>{
     //No esta logeado
     btnFavorito.classList.add('icon-disable');    
     btnSilencio.addEventListener('click', silenciarCuento);
+    document.getElementById('btnHistGuard').classList.remove('btn-hitorias-guardadas');
+    document.getElementById('btnHistGuard').classList.add('btn-hitorias-disable');
+
   }else{
     //Estamos dentro de un perfil
     btnFavorito.classList.remove('icon-disable');  
     btnFavorito.addEventListener('click', addFavorito);  
+    document.querySelector('.btn-hitorias-guardadas').addEventListener('click', btnHistGuardFunc)
     if(userLog.discapacidad == 'auditiva'){
       btnSilencio.classList.add('icon-disable')
     }else if(userLog.discapacidad == 'visual'){
@@ -542,56 +567,65 @@ const openCardInfo = (titulo) =>{
       document.querySelector('.descri-info p').innerHTML = cuento.descripcion;
       textoCuento.querySelector('p').innerHTML = cuento.texto;
       textoCuento.querySelector('h2').innerHTML = cuento.titulo;
-      audioDesc.src = cuento.audioDesc;
-      audioText.src = cuento.audioTexto;
     }
   })
 }
 const closeCardInfo = () => {
   document.querySelector('.card-container').classList.add('display-none');
   document.querySelector('.grid-container').classList.remove('grid-template-3');  
-  tarjetaHistoria.forEach(card =>{
+  document.querySelectorAll('.card').forEach(card =>{
     card.classList.remove('featured-card');      
   });
   offAudioResp();
 }
-const tarjetaHistoria = document.querySelectorAll('.card');
-tarjetaHistoria.forEach(card =>{
-  card.addEventListener('click', ()=>{
-    openCardInfo(card.querySelector('.card-title').innerHTML);    
-    tarjetaHistoria.forEach(card =>{
-      card.classList.remove('featured-card');      
-    })
-    card.classList.add('featured-card');    
-    reproAudioResp(textoDesc);
-    //ReproducirAudio(audioDesc);
-  });
-})
+
+
+
 let currentCuento = -1  ;
-function updateFocus(indexCuento) {
-    tarjetaHistoria.forEach(card => card.classList.remove('featured-card'));
-    tarjetaHistoria[indexCuento].classList.add('featured-card');
-    currentCuento = indexCuento;
-}
+
 document.addEventListener('keydown', (event) => {
   if(currentSection == 1){
     if (event.key === 'ArrowRight') {
-      updateFocus(currentCuento+1);
-      openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
+      currentCuento = funcU.updateFocus(currentCuento+1);
+      openCardInfo(document.querySelectorAll('.card')[currentCuento].querySelector('.card-title').innerHTML);
       reproAudioResp(textoDesc);
     } else if (event.key === 'ArrowLeft') {
-      updateFocus(currentCuento-1);
-      openCardInfo(tarjetaHistoria[currentCuento].querySelector('.card-title').innerHTML);
+      currentCuento = funcU.updateFocus(currentCuento-1);
+      openCardInfo(document.querySelectorAll('.card')[currentCuento].querySelector('.card-title').innerHTML);
       reproAudioResp(textoDesc);
     }
   }  
 })
+
+let histGuarView = false;
+
+const btnHistGuardFunc = ()=>{
+  gridContainer.innerHTML ="";
+  if(histGuarView){
+    histGuarView = !histGuarView;
+    cuentos.forEach((titulos) => {
+      gridContainer.innerHTML += cardCuentos(titulos.titulo, titulos.imagen);
+    })
+  }else{
+    histGuarView = !histGuarView;    
+    console.log(JSON.parse(localStorage.getItem('userLog')).cuentos);
+    cuentos.forEach((titulos) => {
+      JSON.parse(localStorage.getItem('userLog')).cuentos.forEach((save) => {
+        if(save == titulos.titulo){
+          gridContainer.innerHTML += cardCuentos(titulos.titulo, titulos.imagen);
+        }
+      })
+    })
+  }  
+}
 
 
 //-----------------------------------------------
 const btnLeerCuento = document.getElementById('btnLeerCuento');
 
 const startCuento = ()=>{  
+  let num = parseInt(localStorage.getItem(cuentoFijo.titulo)) +1;
+  localStorage.setItem(cuentoFijo.titulo,num)
   document.querySelector('.muestra-historias').classList.add('oculto');  
   document.querySelector('.options') .classList.add('display-none');
   textoCuento.classList.add('active');  
@@ -689,3 +723,7 @@ if (window.innerWidth > 1024) {
     boton.addEventListener('click', openBtnMenu)
   })
 }
+
+document.querySelector('.btn-dash').addEventListener('click', () => {
+  window.location.href = "./dashboard.html";
+})

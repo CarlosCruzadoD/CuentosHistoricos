@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     display: flex;
     justify-content: center;
@@ -14,8 +13,7 @@ body {
 }
 
 .dashboard-container {
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
     text-align: center;
 }
 
