@@ -40,7 +40,6 @@ fetch('./data/cuentos.json')
   .then(data => {
     cuentos = data.cuentos;
     cuentos.forEach((titulos) => {
-      localStorage.setItem(titulos.titulo, 0);
       gridContainer.innerHTML += cardCuentos(titulos.titulo, titulos.imagen);
     })
     document.querySelectorAll('.card').forEach(card =>{
@@ -313,10 +312,7 @@ document.getElementById('btn-submit-login').addEventListener('click', () => {
 });
 //************************************************ */
 document.getElementById('btnNextPage').addEventListener('click', () => {
-  /*console.log(JSON.parse(localStorage.getItem('usuarios')));
-  console.log(JSON.parse(localStorage.getItem('userLog')));*/
-  console.log(localStorage.getItem('Bambi'));
-  
+  scrollToSection(1);
 })
 //************************************************ */
 const activarUser = () =>{
