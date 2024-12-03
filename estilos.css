@@ -1,0 +1,148 @@
+@import url(estilos/styles.css);
+@import url(estilos/InicioEstilos.css);
+@import url(estilos/Contactenos.css);
+@import url(estilos/Historias.css);
+@import url(estilos/Footer.css);
+@import url(estilos/Perfil.css);
+@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Anton|Roboto');
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+
+.historias-destacadas h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #4a90e2;
+}
+
+.btn-register{
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #388E3C ;    
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    margin: 0 20px;
+}
+
+.nav-menu a:hover {
+    text-decoration: underline;
+}
+body{
+    overflow: hidden;
+    scroll-behavior: smooth; /* Desplazamiento suave */
+    font-family: "SUSE", sans-serif;
+    position: relative;
+}
+.translate-100{
+    transform: translate(100%, 0);
+}
+.overlay-active{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    padding: 20px;
+    background-color: #e5e7ef;
+    transition: all .5s;
+}
+
+.container-l{
+    max-width: 1300px;
+    margin:  0 auto;
+    padding-top: 100px;
+}
+.container-clouds-active{
+    display: none;
+}
+.grid-template-3{
+    grid-template-columns: repeat(3, 1fr);
+}
+.display-none{
+    display: none!important;
+}
+.show-text{
+    padding: 40px;
+    overflow: scroll;
+}
+
+
+
+
+
+/*Media Querys: Para el diseño responsive */
+
+/*--------------------------------------------------------------*/
+@media screen and (min-width:1024px) {
+    .icon-menu{
+        display: none;
+    }
+    .menu-options{
+        display: none;
+    }
+    #header{
+        display: block;
+    }
+    .grid-container {
+        overflow-y: scroll;
+    }
+    .historias{
+        max-height: 700px;
+    }
+    #Historias{
+        height: 100vh;
+    }
+    .muestra-historias{
+        overflow: hidden;
+    }
+    .card-container{
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;    
+        height: 100%;        
+        padding: 10px;   
+        display: flex; 
+        position: relative;
+        justify-content: right;
+        margin:0 20px;
+    }
+    .contactenos-container{
+        height: 80vh;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 30px 40px;
+    }
+    .fotos, .contacto {
+        width: 50%;
+    }
+    .fotos{
+        margin: 0 30px;
+    }
+    .info-card{
+        max-width: 400px;
+    }
+}
+
+
+

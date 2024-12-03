@@ -1,0 +1,319 @@
+.perfil{
+    width: 80%;
+    height: 90%;    
+    background: linear-gradient(256deg, #ffffff 0%, #f0eff6 100%);
+    border: 3px solid #fff;
+    z-index: 101;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 20px;
+    font-size: 1.3rem;
+}
+.perfil input, .perfil select {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    margin: 10px 0;
+}
+.perfil button{
+    font-size: 1.2rem;
+}
+.perfil-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+}
+.selector{    
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;  
+    padding: 20px; 
+    z-index: 1002;
+    transition: transform 2s;
+}
+.selector-img{
+    background: url(../img-register/background.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    position: relative;    
+}
+.selector-img img{
+    width: 70%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.register-container{
+    width: 100%;
+    text-align: end;
+}
+.login{
+    width: 100%;
+    position: relative;
+    padding: 40px;
+    height: 100%;
+    padding: 50px;
+}
+
+#close-perfil{
+    position: absolute;
+    z-index: 1003;
+    top: 10px;
+    left: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    border-radius: 20px;
+    background: transparent;
+box-shadow:  8px 8px 14px #b5b5b5,
+             -8px -8px 14px #ffffff;
+}
+#close-perfil span{
+    width: 0;
+    visibility: hidden;
+}
+#close-perfil:hover#close-perfil span{
+    width: 100%;
+    visibility: visible;
+}
+
+.line{
+    flex: 1;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+}
+.tradicional-register{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+    width:100%;
+    max-width: 500px;
+}
+.back-login{
+    margin-top: 20px;
+}
+.back-login button{
+    background:none;
+    border: none;
+    color: #388E3C;
+    cursor: pointer;
+}
+.back-login button:hover{
+    transform: scale(1.02);
+}
+.btn-signup{
+    width: 100%;
+    padding: 20px;
+    border:none;
+    background-color: #4ABE52;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;    
+    transition: all .4s;
+}
+.btn-signup:hover{
+    transform: scale(1.02);
+    background-color: #a5f3aa;
+    color: #2a2a2a;
+}
+.register-box h2 {
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.register-box .logo {
+    display: block;
+    margin: 0 auto 15px;
+    width: 50px;
+}
+
+.register-box input, .register-box select {
+    width: 100%;
+}
+
+.btn-dinamic-register{
+    display: flex;
+    position: relative;
+    border: 2px solid #fff;
+    margin-top: 10px;
+    border-radius: 10px;
+    width: 100%;    
+    color: #fff;
+}
+.btn-dinamic-register button:hover{
+    transform: scale(1.05);
+}
+.btn-cancelar-register:hover{
+    background-color: #4ABE52;
+    color: #fff;
+}
+.btn-cancelar-register:hover+.btn-registrar{
+    background-color: transparent;
+    color: #2a2a2a;
+}
+.btn-registrar{
+    transform: scale(1.03);
+    color: #fff;
+}
+
+/*-------------------------------------------------*/
+/* Sección izquierda del formulario */
+.login-formulario {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-align: left;
+    gap: 15px;
+    height: 100%;
+    width: 100%;
+}
+.info-login{
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+.login-formulario h2 {
+    font-weight: bolder;
+}
+.login-formulario h3 {
+    font-weight: normal;
+    margin: 20px 0;
+}
+.form-2{
+    display: flex;
+    gap: 10px;
+}
+.login-formulario form {
+    margin-top: 10px;
+}
+.other-login{
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 30%;
+}
+.text{
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+}
+.text span{
+    flex: 2;
+    text-align: center;
+}
+.btn-other-login{
+    display: flex;
+    justify-content: center;
+}
+.btnIcon{
+    padding: 10px 30px;
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin: 0 20px;
+    cursor: pointer;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btnIcon:hover{
+    background-color: #fff;
+    transform: scale(1.1);
+}
+.img-icon{
+    width: 100%;
+}
+.btn-dash{
+    background-color: #4ABE52;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+}
+.btn-perfil {
+    background-color: #4ABE52;
+    padding: 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 12px 7.5px 29px -8.5px rgba(75, 191, 82, 0.65);
+}
+.btn-IniciarSesion{
+    box-shadow: 12px 32px 30.5px 13px rgba(170, 242, 170, 0.39);
+    color: white;
+}
+.btn-transparent{
+    background-color: transparent;
+}
+.btn-login:hover {
+    background-color: #388E3C;
+}
+.forgot-password {
+    text-align: end;
+    margin: 20px 0;
+}
+
+.register-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+}
+.form-info{
+    max-width: 550px;
+}
+.other-form-register{ 
+    width: 100%;
+    height: 100%;
+    padding: 40px;    
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.other-register{
+    width:100%;
+    max-width: 500px;
+}

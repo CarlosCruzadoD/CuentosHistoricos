@@ -1,0 +1,287 @@
+.btn-hitorias-guardadas{
+    background-color: #4CAF50;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 20px;
+    color: #f5f5f5;
+    font-size: 1rem;
+}
+.btn-hitorias-guardadas:hover{
+    background-color: #419744;
+    transform: scale(1.1);
+}
+.btn-hitorias-disable{
+    background-color: transparent;
+    border: 1px solid #9f9f9f ;
+    padding: 15px 20px;
+    border-radius: 20px;
+    color: #9f9f9f;
+    font-size: 1rem;
+    cursor: not-allowed;
+}
+.btn-hitorias-disable:hover{
+    background-color: transparent;
+    transform: scale(1);
+}
+.options{
+    display: flex;
+    justify-content: space-around;
+}
+.options span{
+    font-size: 1.2rem;
+    margin: 0 10px;
+}
+.options input{
+    padding: 10px;
+    border-radius: 10px;
+    border: 0;
+    background-color: rgb(236, 236, 236);
+    font-size: 1.1rem
+}
+.historias{
+    display: flex;
+    height: 100%;
+    align-content: center;
+    justify-content: center ;
+}
+.card-container{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95vw; 
+    height: 95vh;
+    z-index: 9999;
+    overflow-y: hidden;
+    margin:0;
+    
+}
+.card-container.active{
+    width: 100%;
+}
+.texto-card{
+    width: 70%;
+    height: 100%;      
+}
+.texto.active{
+    width: 100%;
+    transition: width 1s ease 1s;
+}
+
+.texto{    
+    background-color: rgb(216, 216, 216);    
+    width: 10%;
+    height: 100%;
+    padding: 10px;
+    transform-origin: left;
+    border-radius: 10px;
+    display: flex;
+    justify-content: end;
+}
+.texto p{
+    height: 100%;
+}
+.cuento-text{
+    line-height: 50px;
+    width: 90%;
+    height: 100%;
+    overflow-y: scroll;
+    font-size: 1.5rem;
+    padding:0 50px ;
+}
+
+.info-card{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #e6e6e6;
+    /*max-width: 400px;*/
+    width: 100%;
+    height: 100%;    
+    border-radius: 40px;    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    justify-content: center;
+}
+.muestra-historias{
+    width: 200%;
+    height: 100%;
+    justify-content: center;
+    transition: all 1s ease;
+}
+.muestra-historias.oculto{
+    width: 0;
+    opacity: 0;
+}
+
+.card {
+    background: #f5f5f5;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    transition: transform 0.1s ease;
+    min-width: 240px;
+    max-width: 240px;
+    min-height: 250px;
+    max-height: 330px;
+    cursor: pointer;
+}
+.card:hover {
+    transform: scale(1.05); 
+}
+
+.image-container {
+    width: 100%;
+    height: 80%;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    margin-bottom: 10px;    
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card-title {
+    margin-top: 0.5rem;
+    text-align: center;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.featured-card {
+    background-color: white;
+    border-color: #4CAF50;
+}
+
+.featured-card .image-container {
+    border-color: #4CAF50;
+}
+
+.info-title{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+.info-autor{
+    text-align: center;
+    font-size: 1.2rem;
+}
+.imagen-info{
+    border: 2px solid #ddd;
+    max-height: 250px;
+    border-radius: 20px;
+    margin: 0 auto;
+    text-align: center;
+}
+.img-cuento{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+.descri-info{
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 20px;
+    overflow-y: scroll;
+}
+.descri-info p{
+    word-wrap: break-word;
+}
+.cerrando{
+    margin: 10px 25px;
+    width: 40px;
+    height: 30px;
+    border-radius: 10px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.cerrando:hover{
+    transform: scale(1.1);
+}
+.btnOpcionesCuento{
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+.bu-verde{
+    padding:10px 30px;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    border: 0;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.bu-verde:hover{
+    transform: scale(1.1);
+}
+.btnCuentoCerrado{
+    text-align: center;
+}
+.btnCuentoAbierto{
+    display: flex;
+    width: 100%;
+    max-height: 100px;
+    justify-content: center;
+    gap:40px;
+}
+.btnCuentoAbierto button{
+    background-color: #4CAF50;
+    border: 0;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.btnCuentoAbierto button:hover{
+    transform: scale(1.1);
+}
+
+.icon-favorito, .icon-silencio {
+    width: 24px;
+    height: 24px;
+}
+.icon-favorito img, .icon-silencio img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#btnSilencio.icon-select, #btnFavorito.icon-select{
+    background-color: rgb(225, 151, 151);
+}
+
+#btnSilencio.icon-disable, #btnFavorito.icon-disable{
+    background-color: transparent;
+    border: 2px solid rgb(163, 163, 163);
+}
+#btnSilencio.icon-disable svg, #btnFavorito.icon-disable svg{
+    fill: rgb(167, 164, 164);
+}
+.icon-disable:hover{
+    transform: scale(1)!important;
+    cursor: not-allowed;
+}
